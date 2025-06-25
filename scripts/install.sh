@@ -7,7 +7,6 @@ declare -A tools=(
     ["bat"]="bat --version"
     ["fzf"]="fzf --version"
     ["ripgrep"]="rg --version"
-    ["nmap"]="nmap --version"
     ["tmux"]="tmux -V"
     ["zsh"]="zsh --version"
     ["llvm"]="llvm-config --version"
@@ -19,6 +18,8 @@ declare -A tools=(
     ["git"]="git --version"
     ["docker"]="docker --version"
     ["doxygen"]="doxygen --version"
+    ["nmap"]="nmap --version"
+    ["netcat"]="nc --version"
 )
 
 echo "📦 Setting up development environment"

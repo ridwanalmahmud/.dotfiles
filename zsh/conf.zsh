@@ -114,5 +114,5 @@ alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
 
 bindkey -s "^r" "source ~/.zshrc\n"
-bindkey -s "^f" "~/.config/scripts/tmux-sessionizer\n"
+bindkey -s "^f" "~/.dotfiles/scripts/tmux-sessionizer\n"
 bindkey -s "^p" "nvim \$(rg --files --hidden --glob '!.git' | fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')\n"
