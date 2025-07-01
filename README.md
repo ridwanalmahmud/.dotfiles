@@ -5,7 +5,7 @@ curl -fLO https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrai
 ```
 ## Setup environment
 ###  Provide 4 arguments
-- <name> <email> <keyname> <passphrase>
+- `<name> <email> <keyname> <passphrase>`
 ```
 # - args usage
 # - git config --global user.name <name>
