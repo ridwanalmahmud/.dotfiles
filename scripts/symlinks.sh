@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
-#
-# bootstrap installs things.
 
 cd "$(dirname "$0")/.."
 DOTFILES=$(pwd -P)
-
 set -e
+
+OVERWRITE_ALL=false
+
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --overwrite) OVERWRITE_ALL=true ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
 
 echo ''
 
@@ -37,21 +44,20 @@ link_file () {
 
   if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]
   then
+    if [ "$OVERWRITE_ALL" == "true" ]; then
+      overwrite_all=true
+    fi
 
     if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
     then
-
       # ignoring exit 1 from readlink in case where file already exists
       # shellcheck disable=SC2155
       local currentSrc="$(readlink $dst)"
 
       if [ "$currentSrc" == "$src" ]
       then
-
         skip=true;
-
       else
-
         user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
         [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
         read -n 1 action  < /dev/tty
@@ -72,9 +78,7 @@ link_file () {
           * )
             ;;
         esac
-
       fi
-
     fi
 
     overwrite=${overwrite:-$overwrite_all}
@@ -106,7 +110,6 @@ link_file () {
   fi
 }
 
-
 prop () {
    PROP_KEY=$1
    PROP_FILE=$2
@@ -117,7 +120,7 @@ prop () {
 install_dotfiles () {
   info 'installing dotfiles'
 
-  local overwrite_all=false backup_all=false skip_all=false
+  local overwrite_all=$OVERWRITE_ALL backup_all=false skip_all=false
 
   find -H "$DOTFILES" -maxdepth 2 -name 'links.prop' -not -path '*.git*' | while read linkfile
   do

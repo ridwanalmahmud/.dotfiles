@@ -7,13 +7,16 @@ return {
                 -- A list of parser names, or "all" (the listed parsers MUST always be installed)
                 ensure_installed = {
                     "c",
+                    "rust",
+                    "cpp",
                     "lua",
                     "vim",
                     "vimdoc",
                     "query",
                     "markdown",
                     "markdown_inline",
-                    "make"
+                    "make",
+                    "cmake",
                 },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)

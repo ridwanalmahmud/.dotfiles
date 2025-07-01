@@ -87,7 +87,6 @@ return {
             vim.keymap.set("n", "<leader>dr", dap.restart)
 
             vim.keymap.set("n", "<leader>dv", "<cmd>DapViewToggle<CR>")
-
         end,
     },
 }

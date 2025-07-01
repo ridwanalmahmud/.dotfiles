@@ -16,7 +16,7 @@ return {
             require("mason-lspconfig").setup({
                 ensure_installed = {
                     -- "pyright",
-                    -- "clangd",
+                    -- "clangd", -- comes with llvm
                     "lua_ls",
                     "rust_analyzer",
                 },
@@ -27,7 +27,26 @@ return {
         "neovim/nvim-lspconfig",
         config = function()
             vim.diagnostic.config({
-                float = { border = "rounded" },
+                virtual_text = true,
+                underline = true,
+                update_in_insert = false,
+                severity_sort = true,
+                float = {
+                    border = "rounded",
+                    source = true,
+                },
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "󰅚 ",
+                        [vim.diagnostic.severity.WARN] = "󰀪 ",
+                        [vim.diagnostic.severity.INFO] = "󰋽 ",
+                        [vim.diagnostic.severity.HINT] = "󰌶 ",
+                    },
+                    numhl = {
+                        [vim.diagnostic.severity.ERROR] = "ErrorMsg",
+                        [vim.diagnostic.severity.WARN] = "WarningMsg",
+                    },
+                },
             })
 
             local lspconfig = require("lspconfig")
@@ -56,8 +75,11 @@ return {
             lspconfig.rust_analyzer.setup({
                 capabilities = capabilities,
                 cmd = {
-                    "rustup", "run", "stable", "rust-analyzer"
-                }
+                    "rustup",
+                    "run",
+                    "stable",
+                    "rust-analyzer",
+                },
             })
         end,
     },
