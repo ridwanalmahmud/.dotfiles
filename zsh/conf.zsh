@@ -113,6 +113,14 @@ alias la="ls -lAvh --group-directories-first"
 alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
 
+alias autoremove="sudo pacman -Rns \$(pacman -Qdtq)"
+
+alias q="qemu-x86_64"
+alias nasm="nasm -f elf64"
+alias ldl="clang -nostdlib -target x86_64-linux-gnu -static -fuse-ld=lld"
+
 bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.dotfiles/scripts/tmux-sessionizer\n"
 bindkey -s "^p" "nvim \$(rg --files --hidden --glob '!.git' | fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')\n"
+
+source "$HOME/.cargo/env"

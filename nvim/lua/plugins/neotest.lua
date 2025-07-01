@@ -6,6 +6,7 @@ return {
         "antoinemadec/FixCursorHold.nvim",
         "nvim-treesitter/nvim-treesitter",
         "orjangj/neotest-ctest",
+        "rouge8/neotest-rust",
     },
     config = function()
         require("neotest").setup({
@@ -14,6 +15,10 @@ return {
                     frameworks = {
                         "gtest",
                     },
+                }),
+                require("neotest-rust")({
+                    args = { "--no-capture" },
+                    dap_adapter = "gdb",
                 }),
             },
         })

@@ -50,6 +50,8 @@ vim.keymap.set("n", "<leader>f", function()
     require("conform").format({ bufnr = 0 })
 end)
 
+vim.keymap.set("n", "<leader>mv", "<cmd>Markview<CR>")
+
 vim.api.nvim_create_autocmd("TextYankPost", {
     desc = "Highlight when yanking (copying) text",
     group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
