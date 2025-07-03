@@ -151,22 +151,15 @@ expect <<EOF
     expect eof
 EOF
 
-# # Ensure ssh-agent is running and configured in shell startup
+# Ensure ssh-agent is running and configured in shell startup
 status "Configuring SSH agent persistence..."
-echo "
+cat >> "$HOME/.zshrc" <<EOL
 # SSH Agent Configuration
-if [ -z "$SSH_AUTH_SOCK" ] && [ -f ~/.ssh/${KEY_NAME} ]; then
-    eval "$(ssh-agent -s)" >/dev/null
-    ssh-add ~/.ssh/${KEY_NAME} 2>/dev/null
+if [ -z "\$SSH_AUTH_SOCK" ] && [ -f "\$HOME/.ssh/${KEY_NAME}" ]; then
+    eval "\$(ssh-agent -s)" >/dev/null
+    ssh-add "\$HOME/.ssh/${KEY_NAME}" 2>/dev/null
 fi
-" >> $HOME/.zshrc
-
-# Load it for current session
-eval "$(ssh-agent -s)" >/dev/null
-ssh-add "$HOME/.ssh/$KEY_NAME" || {
-    error "Failed to add SSH key to agent"
-    exit 1
-}
+EOL
 
 success "SSH key setup completed"
 
