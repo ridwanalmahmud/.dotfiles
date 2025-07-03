@@ -50,7 +50,8 @@ PASSPHRASE="$4"
 
 section "System Update & Package Installation"
 status "Updating system and installing packages..."
-pacman -Syu --needed --noconfirm || {
+pacman -Sy sudo --needed --noconfirm
+sudo pacman -Syu --needed --noconfirm || {
     error "Failed to update system and install packages"
     exit 1
 }
@@ -64,8 +65,15 @@ curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/head
 }
 
 section "ZSH Configuration"
+status "Changing default shell..."
+echo $(which zsh) | sudo tee -a /etc/shells
+sudo chsh -s $(which zsh) || {
+    error "Failed to change default shell to zsh"
+    exit 1
+}
+
 status "Installing Oh My Zsh..."
-curl -fsSL "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" | sh -s -- -y || {
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || {
     error "Failed to install Oh My Zsh"
     exit 1
 }
@@ -87,12 +95,6 @@ git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
 status "Creating symlinks..."
 "$HOME/.dotfiles/scripts/symlinks.sh" --overwrite || {
     error "Failed to create symlinks"
-    exit 1
-}
-
-status "Sourcing new zshrc..."
-source "$HOME/.zshrc" || {
-    error "Failed to source zshrc"
     exit 1
 }
 
@@ -131,23 +133,41 @@ if [ -f "$HOME/.ssh/$KEY_NAME" ]; then
     exit 1
 fi
 
+# Generate key
 status "Generating new SSH key..."
-ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -N "$PASSPHRASE" -C "$EMAIL" || {
+ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "" || {
     error "Failed to generate SSH key"
     exit 1
 }
 
-status "Starting ssh-agent..."
-eval "$(ssh-agent -s)" || {
-    error "Failed to start ssh-agent"
-    exit 1
-}
+# Add passphrase securely
+status "Adding passphrase to SSH key..."
+expect <<EOF
+    spawn ssh-keygen -p -f "$HOME/.ssh/$KEY_NAME"
+    expect "Enter new passphrase (empty for no passphrase):"
+    send -- "$PASSPHRASE\r"
+    expect "Enter same passphrase again:"
+    send -- "$PASSPHRASE\r"
+    expect eof
+EOF
 
-status "Adding SSH key to agent..."
+# # Ensure ssh-agent is running and configured in shell startup
+status "Configuring SSH agent persistence..."
+echo "
+# SSH Agent Configuration
+if [ -z "$SSH_AUTH_SOCK" ] && [ -f ~/.ssh/${KEY_NAME} ]; then
+    eval "$(ssh-agent -s)" >/dev/null
+    ssh-add ~/.ssh/${KEY_NAME} 2>/dev/null
+fi
+" >> $HOME/.zshrc
+
+# Load it for current session
+eval "$(ssh-agent -s)" >/dev/null
 ssh-add "$HOME/.ssh/$KEY_NAME" || {
     error "Failed to add SSH key to agent"
     exit 1
 }
+
 success "SSH key setup completed"
 
 section "Setup Complete"
@@ -157,4 +177,4 @@ echo "1. Add your SSH key to GitHub:"
 echo "   cat ~/.ssh/${KEY_NAME}.pub"
 echo "2. Restart your terminal to enjoy your new environment!"
 
-$HOME/.dotfiles/scripts/barca.sh
+"$HOME/.dotfiles/scripts/barca.sh"
