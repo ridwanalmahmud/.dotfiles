@@ -18,7 +18,6 @@ packages=(
     neovim
     git
     docker
-    doxygen
     nmap
     gnu-netcat
 )

@@ -18,6 +18,9 @@ return {
                     "markdown_inline",
                     "make",
                     "cmake",
+                    "yaml",
+                    "json",
+                    "tmux",
                 },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)

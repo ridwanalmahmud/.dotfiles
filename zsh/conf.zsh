@@ -122,5 +122,3 @@ alias ldl="clang -nostdlib -target x86_64-linux-gnu -static -fuse-ld=lld"
 bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.dotfiles/scripts/tmux-sessionizer\n"
 bindkey -s "^p" "nvim \$(rg --files --hidden --glob '!.git' | fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')\n"
-
-source "$HOME/.cargo/env"
