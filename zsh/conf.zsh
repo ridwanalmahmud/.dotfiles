@@ -105,6 +105,8 @@ source $ZSH/oh-my-zsh.sh
 
 unsetopt AUTO_CD
 
+export PATH="$HOME/.local/bin:$PATH"
+
 set -o vi
 export EDITOR="nvim"
 export MANPAGER="nvim +Man!"
@@ -120,5 +122,10 @@ alias nasm="nasm -f elf64"
 alias ldl="clang -nostdlib -target x86_64-linux-gnu -static -fuse-ld=lld"
 
 bindkey -s "^r" "source ~/.zshrc\n"
-bindkey -s "^f" "~/.dotfiles/scripts/tmux-sessionizer\n"
+bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"
 bindkey -s "^p" "nvim \$(rg --files --hidden --glob '!.git' | fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')\n"
+# SSH Agent Configuration
+# if [ -z "$SSH_AUTH_SOCK" ] && [ -f "$HOME/.ssh/github_key" ]; then
+#     eval "$(ssh-agent -s)" >/dev/null
+#     ssh-add "$HOME/.ssh/github_key" 2>/dev/null
+# fi

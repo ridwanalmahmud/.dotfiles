@@ -1,0 +1,6 @@
+$DOTFILES/scripts/tmux-sessionizer=$HOME/.local/bin/tmux-sessionizer
+$DOTFILES/scripts/tmux-window=$HOME/.local/bin/tmux-window
+$DOTFILES/scripts/symlinks=$HOME/.local/bin/symlinks
+$DOTFILES/scripts/install=$HOME/.local/bin/install
+$DOTFILES/scripts/build=$HOME/.local/bin/build
+$DOTFILES/scripts/barca=$HOME/.local/bin/barca

@@ -12,6 +12,7 @@ packages=(
     zsh
     nasm
     llvm
+    clang
     gdb
     make
     cmake
