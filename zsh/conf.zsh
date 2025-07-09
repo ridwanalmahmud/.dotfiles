@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="awesomepanda"
+ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -70,7 +70,7 @@ ZSH_THEME="awesomepanda"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git svn zsh-autosuggestions)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -125,7 +125,7 @@ bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"
 bindkey -s "^p" "nvim \$(rg --files --hidden --glob '!.git' | fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')\n"
 # SSH Agent Configuration
-# if [ -z "$SSH_AUTH_SOCK" ] && [ -f "$HOME/.ssh/github_key" ]; then
-#     eval "$(ssh-agent -s)" >/dev/null
-#     ssh-add "$HOME/.ssh/github_key" 2>/dev/null
-# fi
+if [ -z "$SSH_AUTH_SOCK" ] && [ -f "$HOME/.ssh/github_key" ]; then
+    eval "$(ssh-agent -s)" >/dev/null
+    ssh-add "$HOME/.ssh/github_key" 2>/dev/null
+fi

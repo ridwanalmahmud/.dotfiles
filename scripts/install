@@ -3,10 +3,11 @@
 PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
 
 packages=(
-    bat
     man-db
     man-pages
+    bat
     fzf
+    tree
     ripgrep
     tmux
     zsh
@@ -16,6 +17,7 @@ packages=(
     gdb
     make
     cmake
+    criterion
     neovim
     git
     docker
