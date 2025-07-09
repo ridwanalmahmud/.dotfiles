@@ -59,7 +59,7 @@ success "System updated and packages installed"
 
 section "Dotfiles Installation"
 status "Downloading and running install script..."
-curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/install.sh" | sh || {
+curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/install" | sh || {
     error "Failed to run dotfiles install script"
     exit 1
 }
@@ -93,13 +93,13 @@ git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
 }
 
 status "Creating symlinks..."
-"$HOME/.dotfiles/scripts/symlinks.sh" --overwrite || {
+"$HOME/.dotfiles/scripts/symlinks" --overwrite || {
     error "Failed to create symlinks"
     exit 1
 }
 
 status "Running build script..."
-"$HOME/.dotfiles/scripts/build.sh" || {
+"$HOME/.dotfiles/scripts/build" || {
     error "Build script failed"
     exit 1
 }
@@ -170,4 +170,4 @@ echo "1. Add your SSH key to GitHub:"
 echo "   cat ~/.ssh/${KEY_NAME}.pub"
 echo "2. Restart your terminal to enjoy your new environment!"
 
-"$HOME/.dotfiles/scripts/barca.sh"
+"$HOME/.dotfiles/scripts/barca"
