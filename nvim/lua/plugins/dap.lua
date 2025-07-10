@@ -57,6 +57,8 @@ return {
                 },
             }
 
+            dap.configurations.cpp = dap.configurations.c
+
             dap.configurations.rust = {
                 {
                     name = "gdb",
@@ -77,7 +79,7 @@ return {
             }
 
             vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
-            vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
+            vim.keymap.set("n", "<leader>gb", dap.run_to_cursor)
 
             vim.keymap.set("n", "<leader>dc", dap.continue)
             vim.keymap.set("n", "<leader>di", dap.step_into)
