@@ -38,6 +38,7 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = ""
-vim.cmd('set path+=**')
-vim.cmd('filetype plugin on')
-vim.cmd('set wildmenu')
+vim.cmd("set path+=**")
+vim.cmd("filetype plugin on")
+vim.cmd("set wildmenu")
+vim.cmd("set shell=/usr/sbin/zsh")

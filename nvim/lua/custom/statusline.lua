@@ -27,7 +27,6 @@ vim.o.statusline = table.concat({
     "%<%f %h%w%m%r",                        -- Filename and flags
     "%=",                                   -- Right align
     "%{v:lua.statusline_diagnostics()}",    -- Diagnostics
-    "%y ",                                  -- Filetype
     "[%n] ",                                -- Status Buffer
     "%l:%c ",                               -- Line:Column
     "%P",                                   -- Percentage

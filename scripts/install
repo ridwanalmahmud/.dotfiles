@@ -17,7 +17,7 @@ packages=(
     gdb
     make
     cmake
-    criterion
+    meson
     neovim
     git
     docker
