@@ -12,6 +12,12 @@ return {
     },
 
     config = function()
+        require("telescope").setup({
+            defaults = vim.tbl_extend("force", require("telescope.themes").get_ivy(), {}),
+            extensions = { fzf = {} },
+        })
+        require("telescope").load_extension("fzf")
+
         local builtin = require("telescope.builtin")
         vim.keymap.set("n", "<leader>pf", function()
             builtin.find_files({

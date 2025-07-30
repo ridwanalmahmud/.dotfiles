@@ -22,10 +22,12 @@ return {
 
         require("mason-lspconfig").setup({
             ensure_installed = {
-                -- "pyright",
                 -- "clangd", -- comes with llvm
+                "cmake",
                 "lua_ls",
                 "rust_analyzer",
+                -- "pyright",
+                -- "gopls",
             },
         })
 
@@ -62,7 +64,7 @@ return {
         )
 
         lspconfig.lua_ls.setup({})
-        -- lspconfig.pyright.setup({})
+        lspconfig.cmake.setup({})
         lspconfig.clangd.setup({
             cmd = {
                 "clangd",

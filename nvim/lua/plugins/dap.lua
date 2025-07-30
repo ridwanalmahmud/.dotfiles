@@ -83,8 +83,8 @@ return {
 
             vim.keymap.set("n", "<leader>dc", dap.continue)
             vim.keymap.set("n", "<leader>di", dap.step_into)
+            vim.keymap.set("n", "<leader>do", dap.step_out)
             vim.keymap.set("n", "<leader>dj", dap.step_over)
-            vim.keymap.set("n", "<leader>dk", dap.step_out)
             vim.keymap.set("n", "<leader>dl", dap.step_back)
             vim.keymap.set("n", "<leader>dr", dap.restart)
 

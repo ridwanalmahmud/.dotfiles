@@ -3,11 +3,12 @@ vim.g.maplocalleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "=ap", "ma=ap'a")
+vim.keymap.set("n", "<leader>cf", ":find ~/.dotfiles/nvim/");
 
 -- lsp remaps
 vim.keymap.set("n", "H", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-vim.keymap.set("n", 'gD', vim.lsp.buf.declaration, {})
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 vim.keymap.set("n", "<leader>lws", vim.lsp.buf.workspace_symbol, {})
 vim.keymap.set("n", "<leader>lr", vim.lsp.buf.references, {})
@@ -50,5 +51,3 @@ vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>f", function()
     require("conform").format({ bufnr = 0 })
 end)
-
-vim.keymap.set("n", "<leader>mv", "<cmd>Markview<CR>")

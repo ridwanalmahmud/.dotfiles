@@ -24,10 +24,10 @@ _G.statusline_diagnostics = function()
 end
 
 vim.o.statusline = table.concat({
-    "%<%f %h%w%m%r",                        -- Filename and flags
-    "%=",                                   -- Right align
-    "%{v:lua.statusline_diagnostics()}",    -- Diagnostics
-    "[%n] ",                                -- Status Buffer
-    "%l:%c ",                               -- Line:Column
-    "%P",                                   -- Percentage
+    "%<%f %h%w%m%r", -- filename and flags
+    "%=", -- right align
+    "%{v:lua.statusline_diagnostics()}", -- diagnostics
+    "[%n] ", -- status buffer
+    "%l:%c ", -- line:column
+    "%P", -- percentage
 })
