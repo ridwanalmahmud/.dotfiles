@@ -10,6 +10,7 @@ return {
                 h = { "clang_format" },
                 yaml = { "yamlfmt" },
                 json = { "biome" },
+                bash = { "shfmt" },
             },
             formatters = {
                 clang_format = {

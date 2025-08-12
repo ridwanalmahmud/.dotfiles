@@ -33,7 +33,7 @@ return {
                 t({ "", "# Avoid in release flags -> -g -fsanitize=address" }),
                 t({ "", "# Avoid in development flags -> -O2" }),
                 t({ "", "CFLAGS=-std=c99 -Wall -Wextra -I$(INCDIR) -pipe -pedantic -D_FORTIFY_SOURCE=2 -D_GNU_SOURCE $(OPT) \\" }),
-                t({ "", "\t   -fstack-protector-all -fPIE -MMD -MP \\" }),
+                t({ "", "\t   -fstack-protector-all -fPIE -fPIC -MMD -MP \\" }),
                 t({ "", "\t   -g -fsanitize=address" }),
                 t({ "", "LDFLAGS=-pie" }),
                 t({ "", "TESTLIB=-l" }),

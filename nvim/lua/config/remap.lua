@@ -23,7 +23,7 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 vim.keymap.set("n", "<leader>j", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lprev<CR>zz")
 -- quickfix list diagnostic
-vim.keymap.set("n", "<leader>c", "<cmd>lua vim.diagnostic.setqflist()<CR>")
+vim.keymap.set("n", "<leader>c", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
 

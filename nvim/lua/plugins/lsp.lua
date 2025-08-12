@@ -26,6 +26,7 @@ return {
                 "cmake",
                 "lua_ls",
                 "rust_analyzer",
+                "bashls",
                 -- "pyright",
                 -- "gopls",
             },
@@ -64,6 +65,7 @@ return {
         )
 
         lspconfig.lua_ls.setup({})
+        lspconfig.bashls.setup({})
         lspconfig.cmake.setup({})
         lspconfig.clangd.setup({
             cmd = {

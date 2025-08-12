@@ -17,10 +17,11 @@ packages=(
     gdb
     make
     cmake
-    meson
+    ninja
     neovim
     git
     docker
+    mesa
     nmap
     gnu-netcat
 )

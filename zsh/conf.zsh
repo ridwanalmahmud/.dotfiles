@@ -8,6 +8,8 @@ source $ZSH/oh-my-zsh.sh
 
 unsetopt AUTO_CD
 
+export DISPLAY=:0
+
 export PATH="$HOME/.local/bin:$PATH"
 
 set -o vi
