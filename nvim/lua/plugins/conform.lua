@@ -9,8 +9,7 @@ return {
                 cpp = { "clang_format" },
                 h = { "clang_format" },
                 yaml = { "yamlfmt" },
-                json = { "biome" },
-                bash = { "shfmt" },
+                typst = { "typstyle" },
             },
             formatters = {
                 clang_format = {
@@ -20,13 +19,5 @@ return {
                 },
             },
         })
-
-        -- Format on save
-        -- vim.api.nvim_create_autocmd("BufWritePre", {
-        --     pattern = { "*.c", "*.cpp", "*.h", "*.hpp" },
-        --     callback = function(args)
-        --         require("conform").format({ bufnr = args.buf, timeout_ms = 500 })
-        --     end,
-        -- })
     end,
 }

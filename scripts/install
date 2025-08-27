@@ -5,10 +5,12 @@ PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
 packages=(
     man-db
     man-pages
+    websocat
     bat
     fzf
     tree
     ripgrep
+    ffmpeg
     tmux
     zsh
     nasm

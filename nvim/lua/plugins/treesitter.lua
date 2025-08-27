@@ -20,6 +20,7 @@ return {
                     "yaml",
                     "json",
                     "tmux",
+                    "typst",
                 },
 
                 sync_install = false,

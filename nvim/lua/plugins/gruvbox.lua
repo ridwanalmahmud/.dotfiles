@@ -9,7 +9,7 @@ return {
         vim.g.gruvbox_material_ui_contrast = "high"
         vim.g.gruvbox_material_float_style = "bright"
         vim.g.gruvbox_material_statusline_style = "material"
-        vim.g.gruvbox_material_cursor = "auto"
+        vim.g.gruvbox_material_cursor = "aqua"
 
         -- vim.g.gruvbox_material_colors_override = { bg0 = '#16181A' } -- #0e1010
         vim.g.gruvbox_material_better_performance = 1
