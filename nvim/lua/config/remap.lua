@@ -1,4 +1,6 @@
-vim.keymap.set("n", "<leader>ex", "<cmd>Oil<CR>")
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 vim.keymap.set("n", "=ap", "ma=ap'a")
 
@@ -48,7 +50,10 @@ vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
 
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>fp", "<cmd>TypstPreviewToggle<CR>", { buffer = 0 })
+
+-- plugins remaps
+vim.keymap.set("n", "<leader>pv", "<cmd>Oil<CR>")
+vim.keymap.set("n", "<leader>P", "<cmd>TypstPreviewToggle<CR>", { buffer = 0 })
 vim.keymap.set("n", "<leader>f", function()
     require("conform").format({ bufnr = 0 })
 end)

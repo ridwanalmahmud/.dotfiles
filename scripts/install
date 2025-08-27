@@ -22,6 +22,7 @@ packages=(
     ninja
     neovim
     git
+    typst
     docker
     mesa
     nmap

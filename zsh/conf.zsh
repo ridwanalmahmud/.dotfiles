@@ -9,8 +9,8 @@ source $ZSH/oh-my-zsh.sh
 unsetopt AUTO_CD
 
 export DISPLAY=:0
-
 export PATH="$HOME/.local/bin:$PATH"
+export TYPST_FONT_PATHS="$HOME/.local/share/fonts/"
 
 set -o vi
 export EDITOR="nvim"
@@ -19,7 +19,6 @@ export MANPAGER="nvim +Man!"
 alias la="ls -lAvh --group-directories-first"
 alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
-
 alias autoremove="sudo pacman -Rns \$(pacman -Qdtq)"
 
 bindkey -s "^r" "source ~/.zshrc\n"
