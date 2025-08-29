@@ -2,4 +2,4 @@ $DOTFILES/scripts/sessionizer.sh=$HOME/.local/bin/tmux-sessionizer
 $DOTFILES/scripts/symlinks.sh=$HOME/.local/bin/symlinks
 $DOTFILES/scripts/install.sh=$HOME/.local/bin/install
 $DOTFILES/scripts/build.sh=$HOME/.local/bin/build
-$DOTFILES/scripts/dashboard.sh=$HOME/.local/bin/dashboard
+$DOTFILES/scripts/dashboard.sh=$HOME/.local/bin/barca

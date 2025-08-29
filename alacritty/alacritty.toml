@@ -1,0 +1,35 @@
+[general]
+import = [
+    "~/.dotfiles/alacritty/themes/gruvbox.toml"
+]
+
+[env]
+TERM = "screen-256color"
+
+[window]
+opacity = 0.8
+blur = true
+decorations = "none"
+dynamic_padding = true
+
+[window.padding]
+x = 0
+y = 0
+
+[font]
+size = 20
+
+[font.normal]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Medium"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font Mono"
+style = "Italic"
+
+[terminal.shell]
+program = "/usr/sbin/zsh"

@@ -3,6 +3,7 @@
 PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
 
 packages=(
+    alacritty
     man-db
     man-pages
     websocat
