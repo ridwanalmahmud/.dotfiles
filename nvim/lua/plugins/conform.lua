@@ -8,6 +8,9 @@ return {
                 c = { "clang_format" },
                 cpp = { "clang_format" },
                 h = { "clang_format" },
+                rust = { "rustfmt" },
+                python = { "ruff" },
+                sh = { "shfmt" },
                 yaml = { "yamlfmt" },
                 typst = { "typstyle" },
             },
@@ -15,6 +18,11 @@ return {
                 clang_format = {
                     command = "clang-format",
                     args = { "-style=file", "-assume-filename=<" },
+                    stdin = true,
+                },
+                ruff = {
+                    command = "ruff",
+                    args = { "format", "--stdin-filename", "$FILENAME" },
                     stdin = true,
                 },
             },

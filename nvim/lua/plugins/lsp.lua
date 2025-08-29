@@ -15,6 +15,8 @@ return {
             ensure_installed = {
                 "stylua",
                 "clang-format",
+                "shfmt",
+                "ruff",
                 "yamlfmt",
                 "typstyle",
             },
@@ -39,10 +41,26 @@ return {
                 "rust_analyzer",
                 "cmake",
                 "tinymist",
+                "pyright",
+                "bashls",
             },
             handlers = {
                 function(server_name)
                     require("lspconfig")[server_name].setup({
+                        capabilities = capabilities,
+                    })
+                end,
+
+                ["bashls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.bashls.setup({
+                        capabilities = capabilities,
+                    })
+                end,
+
+                ["pyright"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.pyright.setup({
                         capabilities = capabilities,
                     })
                 end,

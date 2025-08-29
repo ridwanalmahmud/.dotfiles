@@ -13,15 +13,14 @@ status() {
     echo -e "${YELLOW}➔${NC} $1"
 }
 
-# section "Yay aur installation"
-# if ! command -v yay &>/dev/null; then
-#     section "Installing yay"
-#     sudo pacman -Sy --needed git base-devel --noconfirm
-#     git clone https://aur.archlinux.org/yay.git
-#     cd yay && makepkg -si --noconfirm && cd ..
-# else
-#     status "yay already installed."
-# fi
+section "Yay aur installation"
+if ! command -v yay &>/dev/null; then
+    sudo pacman -Sy --needed git base-devel --noconfirm
+    git clone https://aur.archlinux.org/yay.git
+    cd yay && makepkg -si --noconfirm && cd 
+else
+    status "yay already installed."
+fi
 
 section "Wasm installation"
 if ! command -v emcc &>/dev/null; then
@@ -29,7 +28,7 @@ if ! command -v emcc &>/dev/null; then
     cd emsdk
     ./emsdk install latest
     ./emsdk activate latest --permanent
-    cd ..
+    cd
 else
     status "Emscripten already installed."
 fi
@@ -51,12 +50,11 @@ if ! pkg-config --exists raylib; then
     cd src
     make PLATFORM=PLATFORM_WEB -B
 else
-    status "raylib already installed."
+    status "Raylib already installed."
 fi
 
 section "Rust installation"
 if ! command -v rustc &>/dev/null; then
-    section "Installing Rust"
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     source "$HOME/.cargo/env"
 else
