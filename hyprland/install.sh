@@ -7,33 +7,14 @@ NC='\033[0m'
 PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
 
 packages=(
-    alacritty
-    man-db
-    man-pages
-    websocat
-    bat
-    fzf
-    tree
-    ripgrep
-    ffmpeg
-    tmux
-    zsh
-    nasm
-    llvm
-    clang
-    python-pygments
-    gdb
-    make
-    cmake
-    ninja
-    neovim
-    git
-    typst
-    docker
-    mesa
-    nmap
-    gnu-netcat
-)
+    hyprland
+    xorg-xwayland
+    hyprpaper
+    waybar
+    rofi
+    dolphin
+    # firefox
+# )
 
 echo "📦 Installing development packages..."
 $PKG_MANAGER "${packages[@]}"

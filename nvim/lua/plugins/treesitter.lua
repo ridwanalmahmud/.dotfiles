@@ -5,6 +5,7 @@ return {
         config = function()
             require("nvim-treesitter.configs").setup({
                 ensure_installed = {
+                    "hyprlang",
                     "bash",
                     "c",
                     "rust",
@@ -19,6 +20,7 @@ return {
                     "cmake",
                     "yaml",
                     "json",
+                    "jsonc",
                     "tmux",
                     "typst",
                 },
