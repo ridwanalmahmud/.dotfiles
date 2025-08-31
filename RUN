@@ -92,11 +92,17 @@ status "Creating symlinks..."
     exit 1
 }
 
-status "Running build script..."
-"$HOME/.dotfiles/scripts/build.sh" || {
-    error "Build script failed"
-    exit 1
-}
+# status "Hyprland installation..."
+# "$HOME/.dotfiles/hyprland/install.sh" || {
+#     error "Build script failed"
+#     exit 1
+# }
+
+# status "Running build script..."
+# "$HOME/.dotfiles/scripts/build.sh" || {
+#     error "Build script failed"
+#     exit 1
+# }
 
 section "Git Configuration"
 status "Setting up git..."
