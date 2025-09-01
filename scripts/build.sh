@@ -13,6 +13,13 @@ status() {
     echo -e "${YELLOW}➔${NC} $1"
 }
 
+section "pwndbg installation"
+if ! command -v yay &>/dev/null; then
+    curl -qsL 'https://install.pwndbg.re' | sh -s -- -t pwndbg-gdb
+else
+    status "pwndbg is already installed"
+fi
+
 section "Yay aur installation"
 if ! command -v yay &>/dev/null; then
     sudo pacman -Sy --needed git base-devel --noconfirm
