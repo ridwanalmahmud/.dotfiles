@@ -20,6 +20,7 @@ alias la="ls -lAvh --group-directories-first"
 alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
 alias autoremove="sudo pacman -Rns \$(pacman -Qdtq)"
+alias fh='history | fzf | sed -e "s/^[[:space:]]*[0-9]*[[:space:]]*//" -e "s/\\\\/\\\\\\\\/g" | xargs -I{} bash -c "{}"'
 
 bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"

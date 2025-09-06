@@ -4,7 +4,7 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
+PKG_MANAGER="sudo yay -Sy --needed --noconfirm"
 
 packages=(
     hyprland
@@ -13,8 +13,8 @@ packages=(
     waybar
     rofi
     dolphin
-    # firefox
-# )
+    zen-browser-bin
+)
 
 echo "📦 Installing development packages..."
 $PKG_MANAGER "${packages[@]}"

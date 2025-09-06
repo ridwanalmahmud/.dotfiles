@@ -13,18 +13,12 @@ status() {
     echo -e "${YELLOW}➔${NC} $1"
 }
 
-section "pwndbg installation"
-if ! command -v yay &>/dev/null; then
-    curl -qsL 'https://install.pwndbg.re' | sh -s -- -t pwndbg-gdb
-else
-    status "pwndbg is already installed"
-fi
-
-section "Yay aur installation"
+section "Yay installation"
 if ! command -v yay &>/dev/null; then
     sudo pacman -Sy --needed git base-devel --noconfirm
     git clone https://aur.archlinux.org/yay.git
-    cd yay && makepkg -si --noconfirm && cd 
+    cd yay && makepkg -si --noconfirm
+    cd ~ && rm -rf yay
 else
     status "yay already installed."
 fi
@@ -35,7 +29,7 @@ if ! command -v emcc &>/dev/null; then
     cd emsdk
     ./emsdk install latest
     ./emsdk activate latest --permanent
-    cd
+    cd ~ && rm -rf emsdk
 else
     status "Emscripten already installed."
 fi
@@ -56,6 +50,7 @@ if ! pkg-config --exists raylib; then
     # wasm installation
     cd src
     make PLATFORM=PLATFORM_WEB -B
+    cd ~ && rm -rf raylib
 else
     status "Raylib already installed."
 fi
@@ -66,4 +61,11 @@ if ! command -v rustc &>/dev/null; then
     source "$HOME/.cargo/env"
 else
     status "Rust already installed."
+fi
+
+section "pwndbg installation"
+if ! command -v yay &>/dev/null; then
+    curl -qsL 'https://install.pwndbg.re' | sh -s -- -t pwndbg-gdb
+else
+    status "pwndbg is already installed"
 fi
