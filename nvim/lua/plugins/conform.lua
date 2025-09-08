@@ -13,6 +13,7 @@ return {
                 sh = { "shfmt" },
                 yaml = { "yamlfmt" },
                 typst = { "typstyle" },
+                nix = { "nixpkgs-fmt" },
             },
             formatters = {
                 clang_format = {

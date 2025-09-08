@@ -4,21 +4,28 @@ curl -fLO "https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBra
 ```
 
 ## Setup environment
+
+- Create a sudouser
+```bash
+curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/setup/sudouser.sh" | sh -s -- <user.args>
+```
+
+- Run the configurations script
 ```bash
 curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/RUN" | sh -s -- <args>
 ```
 
 > [!NOTE]
-> Provide 4 arguments \
-name - email - keyname - passphrase
+> Provide 3 arguments \
+email - keyname - passphrase
 
 > [!NOTE]
 > args usage \
-git config --global user.name $name \
-git config --global user.email $email \
+create user -- $name (user.args)\
+ssh comment -- $email\
 ~/.ssh/$keyname \
 ssh $passphrase
 
 > [!WARNING]
-> All 4 arguments must be provided as intended.
+> All the arguments must be provided as intended.
 If not, the script will proceed with the wrong configurations.

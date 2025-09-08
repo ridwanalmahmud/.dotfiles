@@ -24,47 +24,60 @@ error() {
 
 section "Development Environment Setup"
 echo -e "${YELLOW}Arguments needed:${NC}"
-echo "1. git config --global user.name \$NAME"
-echo "2. git config --global user.email \$EMAIL"
-echo "3. \$HOME/.ssh/<keyname>"
-echo "4. ssh passphrase"
-echo -e "\n${YELLOW}Warning!${NC} If arguments are not provided properly, setup will abort\n"
-echo "Setup will start in 3..2..1"
-sleep 3
+echo "<email> <keyname> <passphrase>"
+echo -e "\n${YELLOW}Warning!${NC} Make sure the arguments are provided properly.\n"
+echo "Setup will start in a moment"
+sleep 1
 
-if [ $# -ne 4 ]; then
-    error "Error: All 4 arguments need to be provided"
+if [ $# -ne 3 ]; then
+    error "Error: All 3 arguments need to be provided"
     exit 1
 fi
 
-NAME=$1
-EMAIL=$2
-KEY_NAME="$3"
-PASSPHRASE="$4"
+EMAIL=$1
+KEY_NAME="$2"
+PASSPHRASE="$3"
 
-section "System Update & Package Installation"
-status "Updating system and installing packages..."
-pacman -Sy sudo --needed --noconfirm
-sudo pacman -Syu --needed --noconfirm || {
-    error "Failed to update system and install packages"
+section "Setup Nix & Dotfiles"
+status "Installing nix..."
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon || {
+    error "Failed to install nix"
     exit 1
 }
-success "System updated and packages installed"
 
-section "Dotfiles Installation"
-status "Downloading and running install script..."
-curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/install.sh" | sh || {
-    error "Failed to run dotfiles install script"
+status "Setup home manager..."
+  . $HOME/.nix-profile/etc/profile.d/nix.sh
+nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install
+sudo pacman -S git --noconfirm
+
+status "Cloning dotfiles repository..."
+git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
+    error "Failed to clone dotfiles repository"
     exit 1
 }
+sudo pacman -Rns git --noconfirm
+
+status "Home manager installation..."
+home-manager --extra-experimental-features nix-command --extra-experimental-features flakes --impure switch --flake $HOME/.dotfiles/home#home-nix || {
+    error "Failed to install packages"
+    exit 1
+}
+success "Nix setup complete and packages installed"
 
 section "ZSH Configuration"
 status "Changing default shell..."
-echo $(which zsh) | sudo tee -a /etc/shells
-sudo chsh -s $(which zsh) || {
-    error "Failed to change default shell to zsh"
-    exit 1
-}
+ZSH_PATH=$(which zsh)
+if ! grep -q "$ZSH_PATH" /etc/shells 2>/dev/null; then
+    echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
+fi
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    sudo chsh -s "$ZSH_PATH" robin || {
+        error "Failed to change default shell to zsh"
+        exit 1
+    }
+fi
 
 status "Installing Oh My Zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || {
@@ -79,46 +92,11 @@ git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/
     exit 1
 }
 
-section "Dotfiles Setup"
-status "Cloning dotfiles repository..."
-git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
-    error "Failed to clone dotfiles repository"
-    exit 1
-}
-
-status "Creating symlinks..."
-"$HOME/.dotfiles/scripts/symlinks.sh" --overwrite || {
-    error "Failed to create symlinks"
-    exit 1
-}
-
-status "Hyprland installation..."
-"$HOME/.dotfiles/hyprland/install.sh" || {
-    error "Build script failed"
-    exit 1
-}
-
 status "Running build script..."
-"$HOME/.dotfiles/scripts/build.sh" || {
+"$HOME/.dotfiles/scripts/setup/build.sh" || {
     error "Build script failed"
     exit 1
 }
-
-section "Git Configuration"
-status "Setting up git..."
-git config --global user.name "$NAME" || {
-    error "Failed to set git user.name"
-    exit 1
-}
-git config --global user.email "$EMAIL" || {
-    error "Failed to set git user.email"
-    exit 1
-}
-git config --global init.defaultBranch master || {
-    error "Failed to set git default branch"
-    exit 1
-}
-success "Git configured successfully"
 
 section "SSH Key Setup"
 status "Creating SSH directory..."
@@ -133,14 +111,12 @@ if [ -f "$HOME/.ssh/$KEY_NAME" ]; then
     exit 1
 fi
 
-# Generate key
 status "Generating new SSH key..."
 ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "" || {
     error "Failed to generate SSH key"
     exit 1
 }
 
-# Add passphrase securely
 status "Adding passphrase to SSH key..."
 expect <<EOF
     spawn ssh-keygen -p -f "$HOME/.ssh/$KEY_NAME"
@@ -151,7 +127,6 @@ expect <<EOF
     expect eof
 EOF
 
-# Ensure ssh-agent is running and configured in shell startup
 status "Configuring SSH agent persistence..."
 cat >>"$HOME/.zshrc" <<EOL
 

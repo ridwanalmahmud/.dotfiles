@@ -20,6 +20,7 @@ alias la="ls -lAvh --group-directories-first"
 alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
 alias autoremove="sudo pacman -Rns \$(pacman -Qdtq)"
+alias fh='history | fzf | sed -e "s/^[[:space:]]*[0-9]*[[:space:]]*//" -e "s/\\\\/\\\\\\\\/g" | xargs -I{} bash -c "{}"'
 
 bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"
@@ -29,4 +30,9 @@ bindkey -s "^p" "nvim \$(rg --files --hidden --glob '!.git' | fzf --preview='bat
 if [ -z "$SSH_AUTH_SOCK" ] && [ -f "$HOME/.ssh/github_key" ]; then
     eval "$(ssh-agent -s)" >/dev/null
     ssh-add "$HOME/.ssh/github_key" 2>/dev/null
+fi
+
+# Nix Environment
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+    . $HOME/.nix-profile/etc/profile.d/nix.sh;
 fi
