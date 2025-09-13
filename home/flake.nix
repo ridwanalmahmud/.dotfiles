@@ -1,31 +1,25 @@
 {
-  description = "Home Manager configuration of robin";
+    description = "Home Manager configuration of robin";
 
-  inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+    inputs = {
+        nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
-  };
 
-  outputs =
+    outputs =
     { nixpkgs, home-manager, ... }:
     let
-      system = "aarch64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+        system = "aarch64-linux";
+        pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      homeConfigurations."home-nix" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        homeConfigurations."home-nix" = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-      };
+            modules = [ ./home.nix ];
+        };
     };
 }

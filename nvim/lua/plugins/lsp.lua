@@ -101,7 +101,7 @@ return {
                             "--background-index",
                             "--clang-tidy",
                             "--header-insertion=never",
-                            "--query-driver=/usr/bin/clang*", -- Add your clang path if needed
+                            "--query-driver=/usr/bin/clang*",
                         },
                         init_options = {
                             fallbackFlags = { "-I" .. vim.fn.expand("~/your_project/include") },

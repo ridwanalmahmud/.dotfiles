@@ -12,7 +12,7 @@ curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/head
 
 - Run the configurations script
 ```bash
-curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/RUN" | sh -s -- <args>
+curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/nix/scripts/RUN" | sh -s -- <args>
 ```
 
 > [!NOTE]

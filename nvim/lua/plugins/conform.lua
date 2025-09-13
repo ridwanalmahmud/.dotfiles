@@ -26,6 +26,11 @@ return {
                     args = { "format", "--stdin-filename", "$FILENAME" },
                     stdin = true,
                 },
+                typstyle = {
+                    command = "typstyle",
+                    args = { "-t", "4", "-i", "$FILENAME" },
+                    stdin = false,
+                },
             },
         })
     end,
