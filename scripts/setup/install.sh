@@ -3,13 +3,37 @@
 PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
 
 packages=(
-    hyprland
-    xorg-xwayland
-    hyprpaper
-    waybar
-    rofi
-    dolphin
-    # zen-browser-bin
+    man-db
+    man-pages
+    wget
+    websocat
+    bat
+    fzf
+    tree
+    ripgrep
+
+    alacritty
+    zsh
+    tmux
+    git
+    neovim
+
+    nasm
+    llvm
+    clang
+    typst
+    gdb
+    make
+    cmake
+    ninja
+    npm
+    pkg-config
+
+    docker
+    ffmpeg
+
+    nmap
+    gnu-netcat
 )
 
 installed_packages=$(pacman -Qq)

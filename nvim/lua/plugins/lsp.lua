@@ -19,6 +19,7 @@ return {
                 "ruff",
                 "yamlfmt",
                 "typstyle",
+                "nixpkgs-fmt",
             },
             auto_update = true,
             run_on_start = true,
@@ -43,10 +44,18 @@ return {
                 "tinymist",
                 "pyright",
                 "bashls",
+                "nil_ls",
             },
             handlers = {
                 function(server_name)
                     require("lspconfig")[server_name].setup({
+                        capabilities = capabilities,
+                    })
+                end,
+
+                ["nil_ls"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.bashls.setup({
                         capabilities = capabilities,
                     })
                 end,
@@ -92,7 +101,7 @@ return {
                             "--background-index",
                             "--clang-tidy",
                             "--header-insertion=never",
-                            "--query-driver=/usr/bin/clang*", -- Add your clang path if needed
+                            "--query-driver=/usr/bin/clang*",
                         },
                         init_options = {
                             fallbackFlags = { "-I" .. vim.fn.expand("~/your_project/include") },

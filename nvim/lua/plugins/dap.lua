@@ -12,7 +12,7 @@ return {
 
             dap.adapters.gdb = {
                 type = "executable",
-                command = "/usr/sbin/gdb",
+                command = "/usr/bin/gdb",
                 args = { "--interpreter=dap", "--eval-command", "set print pretty on" },
             }
 

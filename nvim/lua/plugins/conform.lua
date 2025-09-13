@@ -13,6 +13,7 @@ return {
                 sh = { "shfmt" },
                 yaml = { "yamlfmt" },
                 typst = { "typstyle" },
+                nix = { "nixpkgs-fmt" },
             },
             formatters = {
                 clang_format = {
@@ -24,6 +25,11 @@ return {
                     command = "ruff",
                     args = { "format", "--stdin-filename", "$FILENAME" },
                     stdin = true,
+                },
+                typstyle = {
+                    command = "typstyle",
+                    args = { "-t", "4", "-i", "$FILENAME" },
+                    stdin = false,
                 },
             },
         })

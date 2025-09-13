@@ -24,7 +24,8 @@ _G.statusline_diagnostics = function()
 end
 
 vim.o.statusline = table.concat({
-    "%<%f %h%w%m%r", -- filename and flags
+    "%{FugitiveStatusline()} ", -- git branch
+    "[%<%t] %h%w%m%r", -- filename and flags
     "%=", -- right align
     "%{v:lua.statusline_diagnostics()}", -- diagnostics
     "[%n] ", -- status buffer

@@ -12,7 +12,7 @@ return {
             follow_cursor = true,
             dependencies_bin = {
                 ["tinymist"] = "tinymist",
-                ["websocat"] = "/usr/sbin/websocat",
+                ["websocat"] = "/usr/bin/websocat",
             },
             extra_args = nil,
             get_root = function(path_of_main_file)

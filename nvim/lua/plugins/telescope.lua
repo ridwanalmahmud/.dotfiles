@@ -43,5 +43,9 @@ return {
             builtin.grep_string({ search = word })
         end)
         vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
+
+        vim.keymap.set("n", "<leader>cf", function()
+            builtin.find_files({ cwd = "~/.dotfiles/" })
+        end)
     end,
 }
