@@ -5,22 +5,14 @@ return {
         config = function()
             require("nvim-treesitter.configs").setup({
                 ensure_installed = {
-                    "hyprlang",
+                    "nix",
                     "bash",
                     "c",
                     "rust",
                     "cpp",
                     "lua",
-                    "vim",
-                    "vimdoc",
-                    "query",
-                    "markdown",
-                    "markdown_inline",
                     "make",
                     "cmake",
-                    "yaml",
-                    "json",
-                    "jsonc",
                     "tmux",
                     "typst",
                 },

@@ -5,7 +5,7 @@ curl -fLO "https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBra
 
 ## Setup environment
 ```bash
-curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/RUN" | sh -s -- <args>
+curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/RUN" | sh -s -- <args>
 ```
 
 > [!NOTE]

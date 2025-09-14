@@ -3,8 +3,8 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/loom ~/notes/math ~/notes/physics \
-        -mindepth 1 -maxdepth 1 -type d | fzf)
+    selected=$(find ~/loom/dev ~/loom/notes \
+        -mindepth 1 -maxdepth 1 -type d -not -path "*.git*" | fzf)
 fi
 
 if [[ -z $selected ]]; then

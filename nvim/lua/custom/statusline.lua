@@ -23,8 +23,11 @@ _G.statusline_diagnostics = function()
     return table.concat(result, "")
 end
 
+vim.cmd([[ highlight StatusStyle guibg=#1d2021 guifg=#d5c4a1 ]])
+
 vim.o.statusline = table.concat({
-    "%<%f %h%w%m%r", -- filename and flags
+    "%#StatusStyle#%{FugitiveStatusline()} ", -- git branch
+    "[%<%t] %h%w%m%r", -- filename and flags
     "%=", -- right align
     "%{v:lua.statusline_diagnostics()}", -- diagnostics
     "[%n] ", -- status buffer

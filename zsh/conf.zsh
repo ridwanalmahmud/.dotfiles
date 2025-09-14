@@ -4,12 +4,15 @@ ZSH_THEME="robbyrussell"
 
 plugins=(git zsh-autosuggestions)
 
-source $ZSH/oh-my-zsh.sh
-
 unsetopt AUTO_CD
 
+source $ZSH/oh-my-zsh.sh
+source $HOME/.cargo/env
+
 export DISPLAY=:0
+export DOTFILES="$HOME/.dotfiles"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
 export TYPST_FONT_PATHS="$HOME/.local/share/fonts/"
 
 set -o vi
@@ -19,7 +22,7 @@ export MANPAGER="nvim +Man!"
 alias la="ls -lAvh --group-directories-first"
 alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
-alias autoremove="sudo pacman -Rns \$(pacman -Qdtq)"
+alias fh='history | fzf --height=50% --layout=reverse | sed -e "s/^[[:space:]]*[0-9]*[[:space:]]*//" -e "s/\\\\/\\\\\\\\/g" | xargs -I{} zsh -c "{}"'
 
 bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"

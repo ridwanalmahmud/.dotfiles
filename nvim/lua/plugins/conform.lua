@@ -5,14 +5,17 @@ return {
         require("conform").setup({
             formatters_by_ft = {
                 lua = { "stylua" },
+                nix = { "nixpkgs-fmt" },
                 c = { "clang_format" },
                 cpp = { "clang_format" },
                 h = { "clang_format" },
                 rust = { "rustfmt" },
                 python = { "ruff" },
                 sh = { "shfmt" },
-                yaml = { "yamlfmt" },
                 typst = { "typstyle" },
+                json = { "clang_format" },
+                yaml = { "yamlfmt" },
+                toml = { "taplo" },
             },
             formatters = {
                 clang_format = {
@@ -24,6 +27,11 @@ return {
                     command = "ruff",
                     args = { "format", "--stdin-filename", "$FILENAME" },
                     stdin = true,
+                },
+                typstyle = {
+                    command = "typstyle",
+                    args = { "-t", "4", "-i", "$FILENAME" },
+                    stdin = false,
                 },
             },
         })

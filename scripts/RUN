@@ -53,7 +53,7 @@ success "System updated and packages installed"
 
 section "Dotfiles Installation"
 status "Downloading and running install script..."
-curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/install.sh" | sh || {
+curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/setup/install.sh" | sh || {
     error "Failed to run dotfiles install script"
     exit 1
 }
@@ -87,21 +87,21 @@ git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
 }
 
 status "Creating symlinks..."
-"$HOME/.dotfiles/scripts/symlinks.sh" --overwrite || {
+"$HOME/.dotfiles/scripts/setup/symlinks.sh" --overwrite || {
     error "Failed to create symlinks"
     exit 1
 }
 
 status "Hyprland installation..."
 "$HOME/.dotfiles/hyprland/install.sh" || {
-    error "Build script failed"
+    error "Hyprland install script failed"
     exit 1
 }
 
 status "Running build script..."
-"$HOME/.dotfiles/scripts/build.sh" || {
-    error "Build script failed"
-    exit 1
+"$HOME/.dotfiles/scripts/setup/build.sh" || {
+   error "Build script failed"
+   exit 1
 }
 
 section "Git Configuration"
@@ -171,4 +171,4 @@ echo "1. Add your SSH key to GitHub:"
 echo "   cat ~/.ssh/${KEY_NAME}.pub"
 echo "2. Restart your terminal to enjoy your new environment!"
 
-"$HOME/.dotfiles/scripts/dashboard/barca.sh"
+"$HOME/.dotfiles/scripts/dashboard/culers.sh"
