@@ -6,34 +6,43 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
+set -e
+
 section() {
     echo -e "\n${BLUE}===${NC} ${GREEN}$1${NC} ${BLUE}===${NC}"
 }
 
 status() {
-    echo -e "${YELLOW}➔${NC} $1"
+    echo -e "${YELLOW}➔ $1${NC}"
 }
 
 success() {
-    echo -e "${GREEN}✓${NC} $1"
+    echo -e "${GREEN}✓ $1${NC}"
 }
 
 error() {
-    echo -e "${RED}✗${NC} $1" >&2
+    echo -e "${RED}✗ $1${NC}" >&2
 }
 
-section "Development Environment Setup"
-echo -e "${YELLOW}Arguments needed:${NC}"
-echo "1. git config --global user.name \$NAME"
-echo "2. git config --global user.email \$EMAIL"
-echo "3. \$HOME/.ssh/<keyname>"
-echo "4. ssh passphrase"
-echo -e "\n${YELLOW}Warning!${NC} If arguments are not provided properly, setup will abort\n"
-echo "Setup will start in 3..2..1"
-sleep 3
+show_help() {
+    echo -e "${YELLOW}Usage:${NC}"
+    echo -e "$0 --help"
+    echo -e "$0 <name> <email> <ssh_keyname> <passphrase>"
+    echo "1. git config --global user.name \$NAME"
+    echo "2. git config --global user.email \$EMAIL"
+    echo "3. \$HOME/.ssh/<keyname>"
+    echo "4. ssh passphrase"
+    echo -e "\n${YELLOW}Warning!${NC} If arguments are not provided properly, setup will abort\n"
+}
+
+if [[ "$1" == "--help" ]]; then
+    show_help
+    exit 0
+fi
 
 if [ $# -ne 4 ]; then
     error "Error: All 4 arguments need to be provided"
+    show_help
     exit 1
 fi
 
@@ -42,26 +51,27 @@ EMAIL=$2
 KEY_NAME="$3"
 PASSPHRASE="$4"
 
+section "Development Environment Setup"
+echo ""
+
 section "System Update & Package Installation"
 status "Updating system and installing packages..."
-pacman -Sy sudo --needed --noconfirm
-sudo pacman -Syu --needed --noconfirm || {
+pacman -Syu --needed --noconfirm || {
     error "Failed to update system and install packages"
     exit 1
 }
-success "System updated and packages installed"
 
-section "Dotfiles Installation"
-status "Downloading and running install script..."
+status "Installing necessary packages..."
 curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/setup/install.sh" | sh || {
     error "Failed to run dotfiles install script"
     exit 1
 }
+success "System updated and packages installed"
 
 section "ZSH Configuration"
 status "Changing default shell..."
-echo $(which zsh) | sudo tee -a /etc/shells
-sudo chsh -s $(which zsh) || {
+echo $(which zsh) | tee -a /etc/shells
+chsh -s $(which zsh) || {
     error "Failed to change default shell to zsh"
     exit 1
 }
@@ -72,12 +82,13 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
     exit 1
 }
 
-status "Configuring ZSH..."
+status "Installing zsh plugins..."
 echo "" >"$HOME/.zshrc"
 git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/zsh-autosuggestions || {
     error "Failed to clone zsh-autosuggestions"
     exit 1
 }
+success "Zsh configurations updated..."
 
 section "Dotfiles Setup"
 status "Cloning dotfiles repository..."
@@ -86,23 +97,30 @@ git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
     exit 1
 }
 
-status "Creating symlinks..."
-"$HOME/.dotfiles/scripts/setup/symlinks.sh" --overwrite || {
-    error "Failed to create symlinks"
+status "Installing fonts..."
+"$HOME/.dotfiles/fonts/fonts.sh" || {
+    error "Failed to install fonts"
     exit 1
 }
 
-status "Hyprland installation..."
-"$HOME/.dotfiles/hyprland/install.sh" || {
-    error "Hyprland install script failed"
+status "Creating symlinks..."
+"$HOME/.dotfiles/scripts/setup/symlinks.sh" --overwrite-all || {
+    error "Failed to create symlinks"
     exit 1
 }
 
 status "Running build script..."
 "$HOME/.dotfiles/scripts/setup/build.sh" || {
-   error "Build script failed"
-   exit 1
+    error "Build script failed"
+    exit 1
 }
+
+status "Installing hyprland..."
+"$HOME/.dotfiles/hyprland/install.sh" || {
+    error "Hyprland install script failed"
+    exit 1
+}
+success "Setup complete"
 
 section "Git Configuration"
 status "Setting up git..."
@@ -133,14 +151,14 @@ if [ -f "$HOME/.ssh/$KEY_NAME" ]; then
     exit 1
 fi
 
-# Generate key
+# generate key
 status "Generating new SSH key..."
 ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "" || {
     error "Failed to generate SSH key"
     exit 1
 }
 
-# Add passphrase securely
+# add passphrase
 status "Adding passphrase to SSH key..."
 expect <<EOF
     spawn ssh-keygen -p -f "$HOME/.ssh/$KEY_NAME"
@@ -151,7 +169,7 @@ expect <<EOF
     expect eof
 EOF
 
-# Ensure ssh-agent is running and configured in shell startup
+# ensure ssh-agent is running and configured in shell startup
 status "Configuring SSH agent persistence..."
 cat >>"$HOME/.zshrc" <<EOL
 

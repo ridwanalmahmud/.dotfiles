@@ -56,7 +56,7 @@ return {
 
                 ["nil_ls"] = function()
                     local lspconfig = require("lspconfig")
-                    lspconfig.bashls.setup({
+                    lspconfig.nil_ls.setup({
                         capabilities = capabilities,
                     })
                 end,

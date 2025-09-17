@@ -1,5 +1,5 @@
 $DOTFILES/alacritty/=$HOME/.config/alacritty
+$DOTFILES/wezterm/=$HOME/.config/wezterm
+$DOTFILES/nvim/=$HOME/.config/nvim
 $DOTFILES/zsh/conf.zsh=$HOME/.zshrc
 $DOTFILES/tmux/tmux.conf=$HOME/.tmux.conf
-$DOTFILES/fonts/=$HOME/.local/share/fonts
-$DOTFILES/nvim/=$HOME/.config/nvim

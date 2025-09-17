@@ -5,16 +5,19 @@ PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
 packages=(
     man-db
     man-pages
+    tldr
     wget
     websocat
     bat
     fzf
     tree
     ripgrep
+
     perf
     strace
+    ffmpeg
 
-    # alacritty
+    wezterm
     zsh
     tmux
     git
@@ -31,9 +34,7 @@ packages=(
     ninja
     npm
     pkg-config
-
-    # docker
-    # ffmpeg
+    docker
 
     nmap
     gnu-netcat

@@ -5,6 +5,7 @@ return {
 
     dependencies = {
         "nvim-lua/plenary.nvim",
+        "nvim-tree/nvim-web-devicons",
         {
             "nvim-telescope/telescope-fzf-native.nvim",
             build = "make",
@@ -12,10 +13,6 @@ return {
     },
 
     config = function()
-        require("telescope").setup({
-            defaults = vim.tbl_extend("force", require("telescope.themes").get_ivy(), {}),
-            extensions = { fzf = {} },
-        })
         require("telescope").load_extension("fzf")
 
         local builtin = require("telescope.builtin")
@@ -31,7 +28,7 @@ return {
                 file_ignore_patterns = { "^.git/" }, -- Extra safety
             })
         end, {})
-        vim.keymap.set("n", "<C-p>", builtin.git_files, {})
+        vim.keymap.set("n", "<leader>gf", builtin.git_files, {})
         vim.keymap.set("n", "<leader>ps", builtin.live_grep, {})
 
         vim.keymap.set("n", "<leader>pws", function()

@@ -6,3 +6,4 @@ $DOTFILES/scripts/workflow/debug.sh=$HOME/.local/bin/debug
 $DOTFILES/scripts/dashboard/culers.sh=$HOME/.local/bin/culers
 $DOTFILES/scripts/dashboard/stark.sh=$HOME/.local/bin/stark
 $DOTFILES/scripts/dashboard/marauders.sh=$HOME/.local/bin/marauders
+$DOTFILES/fonts/fonts.sh=$HOME/.local/bin/fonts

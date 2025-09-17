@@ -1,6 +1,6 @@
 ## System font
 ```bash
-curl -fLO "https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf"
+curl -fLO "https://github.com/githubnext/monaspace/raw/HEAD/fonts/Frozen%20Fonts/Monaspace%20Radon/MonaspaceRadonFrozen-SemiBold.ttf
 ```
 
 ## Setup environment
@@ -9,16 +9,4 @@ curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/head
 ```
 
 > [!NOTE]
-> Provide 4 arguments \
-name - email - keyname - passphrase
-
-> [!NOTE]
-> args usage \
-git config --global user.name $name \
-git config --global user.email $email \
-~/.ssh/$keyname \
-ssh $passphrase
-
-> [!WARNING]
-> All 4 arguments must be provided as intended.
-If not, the script will proceed with the wrong configurations.
+> Use (./RUN --help) to find out the usage

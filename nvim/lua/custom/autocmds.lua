@@ -14,7 +14,7 @@ local lang_maps = {
     },
     cpp = {
         build = "mkdir -p build && cmake -B build -G Ninja && cmake --build build --parallel $(nproc)",
-        exec = "ninja -C run",
+        exec = "ninja -C build run",
         test = "mkdir -p build && ctest --test-dir build --output-on-failure",
     },
     rust = { build = "cargo build", exec = "cargo run", test = "cargo test" },
