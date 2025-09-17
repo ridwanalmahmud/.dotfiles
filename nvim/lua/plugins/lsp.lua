@@ -14,6 +14,7 @@ return {
         require("mason-tool-installer").setup({
             ensure_installed = {
                 "stylua",
+                "taplo",
                 "clang-format",
                 "shfmt",
                 "ruff",
@@ -55,7 +56,7 @@ return {
 
                 ["nil_ls"] = function()
                     local lspconfig = require("lspconfig")
-                    lspconfig.bashls.setup({
+                    lspconfig.nil_ls.setup({
                         capabilities = capabilities,
                     })
                 end,

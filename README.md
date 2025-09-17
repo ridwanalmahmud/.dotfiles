@@ -1,6 +1,6 @@
 ## System font
 ```bash
-curl -fLO "https://github.com/ryanoasis/nerd-fonts/raw/HEAD/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFont-Regular.ttf"
+curl -fLO "https://github.com/githubnext/monaspace/raw/HEAD/fonts/Frozen%20Fonts/Monaspace%20Radon/MonaspaceRadonFrozen-SemiBold.ttf
 ```
 
 ## Setup environment

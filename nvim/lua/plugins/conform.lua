@@ -5,15 +5,17 @@ return {
         require("conform").setup({
             formatters_by_ft = {
                 lua = { "stylua" },
+                nix = { "nixpkgs-fmt" },
                 c = { "clang_format" },
                 cpp = { "clang_format" },
                 h = { "clang_format" },
                 rust = { "rustfmt" },
                 python = { "ruff" },
                 sh = { "shfmt" },
-                yaml = { "yamlfmt" },
                 typst = { "typstyle" },
-                nix = { "nixpkgs-fmt" },
+                json = { "clang_format" },
+                yaml = { "yamlfmt" },
+                toml = { "taplo" },
             },
             formatters = {
                 clang_format = {

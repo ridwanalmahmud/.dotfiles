@@ -10,6 +10,9 @@ vim.keymap.set("n", "<leader>m", "@")
 vim.keymap.set("n", "<C-m>", "`")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", {})
+vim.keymap.set("n", "<leader><leader>", "@:")
+vim.keymap.set("n", "<C-b>", "<cmd>bnext<CR>")
+vim.keymap.set("n", "<C-p>", "<cmd>bprev<CR>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -37,21 +40,21 @@ vim.keymap.set("n", "<leader>lrr", vim.lsp.buf.rename, {})
 vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, {})
 -- diagnostic
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})
-vim.keymap.set("n", "<leader>lj", vim.diagnostic.goto_next, {})
-vim.keymap.set("n", "<leader>lk", vim.diagnostic.goto_prev, {})
+vim.keymap.set("n", "<leader>j", vim.diagnostic.goto_next, {})
+vim.keymap.set("n", "<leader>k", vim.diagnostic.goto_prev, {})
 -- location list diagnostic
 vim.keymap.set("n", "<leader>xq", vim.diagnostic.setloclist, {})
 vim.keymap.set("n", "<leader>xj", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>xk", "<cmd>lprev<CR>zz")
 -- quickfix list diagnostic
 vim.keymap.set("n", "<leader>cc", vim.diagnostic.setqflist)
-vim.keymap.set("n", "<leader>j", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
 
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
--- plugins remaps
+-- plugin remaps
 vim.keymap.set("n", "<leader>pv", "<cmd>Oil<CR>")
 vim.keymap.set("n", "<leader>P", "<cmd>TypstPreviewToggle<CR>", { buffer = 0 })
 vim.keymap.set("n", "<leader>dv", "<cmd>DapViewToggle<CR>")

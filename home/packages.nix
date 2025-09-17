@@ -2,39 +2,47 @@
 
 {
     home.packages = with pkgs; [
-        # hyprland
-        # xwayland
-        # hyprpaper
-        # waybar
-        # rofi
-        # kdePackages.dolphin
-        # alacritty
+        hyprland
+        xwayland
+        hyprpaper
+        waybar
+        rofi
+        kdePackages.dolphin
+
         man-db
         man-pages
+        tldr
         wget
         websocat
-        linuxPackages.perf
         bat
         fzf
         tree
         ripgrep
-        tmux
+
+        linuxPackages.perf
+        strace
+        ffmpeg
+
+        wezterm
         zsh
+        tmux
+        git
+        neovim
+
         nasm
+        lld
         llvm
         clang
         gdb
         gnumake
         cmake
         ninja
-        neovim
-        git
         nodejs
+        pkg-config
+        docker
+        typst
+
         nmap
         netcat-gnu
-        # ffmpeg
-        # typst
-        # docker
-        # mesa
     ];
 }
