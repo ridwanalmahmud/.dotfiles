@@ -6,11 +6,11 @@ vim.keymap.set("n", "=ap", "ma=ap'a")
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "<leader>m", "@")
+vim.keymap.set({ "n", "v" }, "<leader>m", "@")
+vim.keymap.set({ "n", "v" }, "<leader><leader>", "@:")
 vim.keymap.set("n", "<C-m>", "`")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", {})
-vim.keymap.set("n", "<leader><leader>", "@:")
 vim.keymap.set("n", "<C-b>", "<cmd>bnext<CR>")
 vim.keymap.set("n", "<C-p>", "<cmd>bprev<CR>")
 

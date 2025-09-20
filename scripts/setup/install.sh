@@ -15,6 +15,7 @@ packages=(
 
     perf
     strace
+    ltrace
     ffmpeg
 
     wezterm
@@ -33,11 +34,13 @@ packages=(
     cmake
     ninja
     npm
-    pkg-config
+    pkgconf
     docker
 
     nmap
     gnu-netcat
+    radare2
+    r2ghidra
 )
 
 installed_packages=$(pacman -Qq)
@@ -50,10 +53,5 @@ for pkg in "${packages[@]}"; do
         echo "$pkg is already installed"
     fi
 done
-
-if [ ${#packages_to_install[@]} -eq 0 ]; then
-    echo -e "All packages are already installed!"
-    exit 0
-fi
 
 $PKG_MANAGER "${packages_to_install[@]}"

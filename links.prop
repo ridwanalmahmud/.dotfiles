@@ -3,3 +3,4 @@ $DOTFILES/wezterm/=$HOME/.config/wezterm
 $DOTFILES/nvim/=$HOME/.config/nvim
 $DOTFILES/zsh/conf.zsh=$HOME/.zshrc
 $DOTFILES/tmux/tmux.conf=$HOME/.tmux.conf
+$DOTFILES/radare2/radare.conf=$HOME/.radare2rc

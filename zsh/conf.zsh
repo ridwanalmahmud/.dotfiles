@@ -22,7 +22,8 @@ export MANPAGER="nvim +Man!"
 alias la="ls -lAvh --group-directories-first"
 alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
-alias fh='history | fzf --height=50% --layout=reverse | sed -e "s/^[[:space:]]*[0-9]*[[:space:]]*//" -e "s/\\\\/\\\\\\\\/g" | xargs -I{} zsh -c "{}"'
+alias fh="history | fzf --height=50% --layout=reverse | sed -e 's/^[[:space:]]*[0-9]*[[:space:]]*//' -e 's/\\\\/\\\\\\\\/g' | xargs -I{} zsh -c '{}'"
+alias vista="nvim $DOTFILES/scripts/setup/install.sh"
 
 bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"
