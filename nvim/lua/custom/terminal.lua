@@ -47,4 +47,4 @@ vim.api.nvim_create_user_command("Floaterminal", function()
     end
 end, {})
 
-vim.keymap.set({ "n", "t" }, "<leader>tt", "<cmd>Floaterminal<CR>", {})
+vim.keymap.set({ "n", "t" }, "<leader>T", "<cmd>Floaterminal<CR>", {})

@@ -21,15 +21,11 @@ export MANPAGER="nvim +Man!"
 
 alias la="ls -lAvh --group-directories-first"
 alias glog="git --no-pager log --oneline --decorate --graph --parents"
-alias bat="bat --style=numbers --theme=gruvbox-dark --no-pager"
-alias fh='history | fzf --height=50% --layout=reverse | sed -e "s/^[[:space:]]*[0-9]*[[:space:]]*//" -e "s/\\\\/\\\\\\\\/g" | xargs -I{} zsh -c "{}"'
+alias bat="bat --style=numbers --theme=gruvbox-dark --color=always"
+alias fh='eval $(history | fzf --height=50% --layout=reverse --tac | sed "s/^[[:space:]]*[0-9]*[[:space:]]*//")'
+alias vistall="nvim $DOTFILES/scripts/setup/install.sh"
+alias vbuild="nvim $DOTFILES/scripts/setup/build.sh"
+alias vifzf="nvim \$(fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')"
 
 bindkey -s "^r" "source ~/.zshrc\n"
 bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"
-bindkey -s "^p" "nvim \$(rg --files --hidden --glob '!.git' | fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')\n"
-
-# SSH Agent Configuration
-if [ -z "$SSH_AUTH_SOCK" ] && [ -f "$HOME/.ssh/github_key" ]; then
-    eval "$(ssh-agent -s)" >/dev/null
-    ssh-add "$HOME/.ssh/github_key" 2>/dev/null
-fi

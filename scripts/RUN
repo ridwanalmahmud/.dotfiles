@@ -104,7 +104,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/
 }
 
 status "Installing fonts..."
-"$HOME/.dotfiles/fonts/fonts.sh" || {
+"$HOME/.dotfiles/scripts/setup/fonts.sh" || {
     error "Failed to install fonts"
     exit 1
 }
@@ -117,10 +117,7 @@ status "Running build script..."
 
 section "SSH Key Setup"
 status "Creating SSH directory..."
-mkdir -p "$HOME/.ssh" || {
-    error "Failed to create .ssh directory"
-    exit 1
-}
+mkdir -p "$HOME/.ssh"
 chmod 700 "$HOME/.ssh"
 
 if [ -f "$HOME/.ssh/$KEY_NAME" ]; then
@@ -128,39 +125,27 @@ if [ -f "$HOME/.ssh/$KEY_NAME" ]; then
     exit 1
 fi
 
+# generate key
 status "Generating new SSH key..."
-ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "" || {
+ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "$PASSPHRASE" || {
     error "Failed to generate SSH key"
     exit 1
 }
 
-status "Adding passphrase to SSH key..."
-expect <<EOF
-    spawn ssh-keygen -p -f "$HOME/.ssh/$KEY_NAME"
-    expect "Enter new passphrase (empty for no passphrase):"
-    send -- "$PASSPHRASE\r"
-    expect "Enter same passphrase again:"
-    send -- "$PASSPHRASE\r"
-    expect eof
-EOF
-
+# ensure ssh-agent is running and configured in shell startup
 status "Configuring SSH agent persistence..."
-cat >>"$HOME/.zshrc" <<EOL
+cat >> "$HOME/.zprofile" <<EOL
 
 # SSH Agent Configuration
-if [ -z "\$SSH_AUTH_SOCK" ] && [ -f "\$HOME/.ssh/${KEY_NAME}" ]; then
-    eval "\$(ssh-agent -s)" >/dev/null
-    ssh-add "\$HOME/.ssh/${KEY_NAME}" 2>/dev/null
+if [ -z "\$SSH_AUTH_SOCK" ]; then
+    eval "\$(ssh-agent)" >/dev/null
+    if [ -f "\$HOME/.ssh/${KEY_NAME}" ]; then
+        ssh-add "\$HOME/.ssh/${KEY_NAME}" 2>/dev/null
+    fi
 fi
 EOL
-
 success "SSH key setup completed"
 
-section "Setup Complete"
 success "Development environment setup successfully completed!"
-echo -e "\nNext steps:"
-echo "1. Add your SSH key to GitHub:"
-echo "   cat ~/.ssh/${KEY_NAME}.pub"
-echo "2. Restart your terminal to enjoy your new environment!"
 
 "$HOME/.dotfiles/scripts/dashboard/barca.sh"

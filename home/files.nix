@@ -8,6 +8,7 @@ in {
     home.file = {
         ".tmux.conf".source = "${dotfiles}/tmux/tmux.conf";
         ".zshrc".source = "${dotfiles}/zsh/conf.zsh";
+        ".radare2rc".source = "${dotfiles}/radare2/radare.conf"
 
         ".config/nix" = {
             source = "${dotfiles}/nix";
@@ -26,9 +27,8 @@ in {
             source = "${dotfiles}/alacritty";
             recursive = true;
         };
-
-        ".local/share/fonts" = {
-            source = "${dotfiles}/fonts";
+        ".config/wezterm" = {
+            source = "${dotfiles}/wezterm";
             recursive = true;
         };
 
@@ -46,18 +46,6 @@ in {
         };
         "${binDir}/debug" = {
             source = "${scripts}/workflow/debug.sh";
-            executable = true;
-        };
-        "${binDir}/culers" = {
-            source = "${scripts}/dashboard/culers.sh";
-            executable = true;
-        };
-        "${binDir}/stark" = {
-            source = "${scripts}/dashboard/stark.sh";
-            executable = true;
-        };
-        "${binDir}/marauders" = {
-            source = "${scripts}/dashboard/marauders.sh";
             executable = true;
         };
 

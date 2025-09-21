@@ -21,6 +21,7 @@
 
         linuxPackages.perf
         strace
+        ltrace
         ffmpeg
 
         wezterm
@@ -33,6 +34,7 @@
         lld
         llvm
         clang
+        typst
         gdb
         gnumake
         cmake
@@ -40,9 +42,9 @@
         nodejs
         pkg-config
         docker
-        typst
 
         nmap
         netcat-gnu
+        radare2
     ];
 }
