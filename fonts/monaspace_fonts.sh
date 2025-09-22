@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 FONT_PATH=$HOME/.local/share/fonts
 
 argon_dir=$FONT_PATH/monaspace_argon

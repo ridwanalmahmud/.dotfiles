@@ -1,9 +1,6 @@
 $DOTFILES/scripts/setup/install.sh=$HOME/.local/bin/install
 $DOTFILES/scripts/setup/build.sh=$HOME/.local/bin/build
 $DOTFILES/scripts/setup/symlinks.sh=$HOME/.local/bin/symlinks
+$DOTFILES/scripts/setup/fonts.sh=$HOME/.local/bin/fonts
 $DOTFILES/scripts/workflow/sessionizer.sh=$HOME/.local/bin/tmux-sessionizer
 $DOTFILES/scripts/workflow/debug.sh=$HOME/.local/bin/debug
-$DOTFILES/scripts/dashboard/culers.sh=$HOME/.local/bin/culers
-$DOTFILES/scripts/dashboard/stark.sh=$HOME/.local/bin/stark
-$DOTFILES/scripts/dashboard/marauders.sh=$HOME/.local/bin/marauders
-$DOTFILES/fonts/fonts.sh=$HOME/.local/bin/fonts

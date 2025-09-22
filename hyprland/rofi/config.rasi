@@ -9,7 +9,7 @@ configuration {
     window-format:              "{w} · {c} · {t}";
 }
 
-@import                          "theme/gruvbox.rasi"
+@import                          "./gruvbox.rasi"
 
 * {
     border-colour:               var(selected);

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
 
 packages=(
@@ -15,13 +17,23 @@ packages=(
 
     perf
     strace
-    ffmpeg
+    ltrace
+    # ffmpeg
 
-    wezterm
+    # wezterm
     zsh
     tmux
     git
+    base-devel # for yay
     neovim
+
+    # hyprland
+    # xorg-xwayland
+    # hyprpaper
+    # waybar
+    # rofi
+    # dolphin
+    # zen-browser-bin
 
     nasm
     lld
@@ -33,11 +45,13 @@ packages=(
     cmake
     ninja
     npm
-    pkg-config
-    docker
+    pkgconf
+    # docker
 
     nmap
     gnu-netcat
+    radare2
+    r2ghidra
 )
 
 installed_packages=$(pacman -Qq)
@@ -50,10 +64,5 @@ for pkg in "${packages[@]}"; do
         echo "$pkg is already installed"
     fi
 done
-
-if [ ${#packages_to_install[@]} -eq 0 ]; then
-    echo -e "All packages are already installed!"
-    exit 0
-fi
 
 $PKG_MANAGER "${packages_to_install[@]}"

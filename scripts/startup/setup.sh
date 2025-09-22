@@ -9,7 +9,7 @@ NC='\033[0m'
 set -e
 
 section() {
-    echo -e "\n${BLUE}===${NC} ${GREEN}$1${NC} ${BLUE}===${NC}"
+    echo -e "${BLUE}===${NC} ${GREEN}$1${NC} ${BLUE}===${NC}"
 }
 
 status() {
@@ -24,57 +24,35 @@ error() {
     echo -e "${RED}✗ $1${NC}" >&2
 }
 
-show_help() {
-    echo -e "${YELLOW}Usage:${NC}"
-    echo -e "$0 --help"
-    echo -e "$0 <name> <email> <ssh_keyname> <passphrase>"
-    echo "1. git config --global user.name \$NAME"
-    echo "2. git config --global user.email \$EMAIL"
-    echo "3. \$HOME/.ssh/<keyname>"
-    echo "4. ssh passphrase"
-    echo -e "\n${YELLOW}Warning!${NC} If arguments are not provided properly, setup will abort\n"
-}
-
-if [[ "$1" == "--help" ]]; then
-    show_help
-    exit 0
-fi
-
-if [ $# -ne 4 ]; then
-    error "Error: All 4 arguments need to be provided"
-    show_help
-    exit 1
-fi
-
-NAME=$1
-EMAIL=$2
-KEY_NAME="$3"
-PASSPHRASE="$4"
+USER=$1
+GITNAME=$2
+EMAIL=$3
+KEY_NAME="$4"
+PASSPHRASE="$5"
 
 section "Development Environment Setup"
-echo ""
 
-section "System Update & Package Installation"
-status "Updating system and installing packages..."
-pacman -Syu --needed --noconfirm || {
-    error "Failed to update system and install packages"
-    exit 1
-}
-
+section "Package Installation"
+status "Installing packages..."
 status "Installing necessary packages..."
 curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/setup/install.sh" | sh || {
     error "Failed to run dotfiles install script"
     exit 1
 }
-success "System updated and packages installed"
+success "Packages installed"
 
 section "ZSH Configuration"
 status "Changing default shell..."
-echo $(which zsh) | tee -a /etc/shells
-chsh -s $(which zsh) || {
-    error "Failed to change default shell to zsh"
-    exit 1
-}
+ZSH_PATH=$(which zsh)
+if ! grep -q "$ZSH_PATH" /etc/shells 2>/dev/null; then
+    echo "$ZSH_PATH" | sudo tee -a /etc/shells >/dev/null
+fi
+if [ "$SHELL" != "$ZSH_PATH" ]; then
+    sudo chsh -s "$ZSH_PATH" $USER || {
+        error "Failed to change default shell to zsh"
+        exit 1
+    }
+fi
 
 status "Installing Oh My Zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || {
@@ -88,6 +66,10 @@ git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/
     error "Failed to clone zsh-autosuggestions"
     exit 1
 }
+git clone https://github.com/Aloxaf/fzf-tab "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/fzf-tab || {
+    error "Failed to clone fzf-tab"
+    exit 1
+}
 success "Zsh configurations updated..."
 
 section "Dotfiles Setup"
@@ -98,7 +80,7 @@ git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
 }
 
 status "Installing fonts..."
-"$HOME/.dotfiles/fonts/fonts.sh" || {
+"$HOME/.dotfiles/scripts/setup/fonts.sh" || {
     error "Failed to install fonts"
     exit 1
 }
@@ -110,21 +92,15 @@ status "Creating symlinks..."
 }
 
 status "Running build script..."
-"$HOME/.dotfiles/scripts/setup/build.sh" || {
+"$HOME/.dotfiles/scripts/setup/build.sh --yay" || {
     error "Build script failed"
-    exit 1
-}
-
-status "Installing hyprland..."
-"$HOME/.dotfiles/hyprland/install.sh" || {
-    error "Hyprland install script failed"
     exit 1
 }
 success "Setup complete"
 
 section "Git Configuration"
 status "Setting up git..."
-git config --global user.name "$NAME" || {
+git config --global user.name "$GITNAME" || {
     error "Failed to set git user.name"
     exit 1
 }
@@ -140,10 +116,7 @@ success "Git configured successfully"
 
 section "SSH Key Setup"
 status "Creating SSH directory..."
-mkdir -p "$HOME/.ssh" || {
-    error "Failed to create .ssh directory"
-    exit 1
-}
+mkdir -p "$HOME/.ssh"
 chmod 700 "$HOME/.ssh"
 
 if [ -f "$HOME/.ssh/$KEY_NAME" ]; then
@@ -153,40 +126,25 @@ fi
 
 # generate key
 status "Generating new SSH key..."
-ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "" || {
+ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "$PASSPHRASE" || {
     error "Failed to generate SSH key"
     exit 1
 }
 
-# add passphrase
-status "Adding passphrase to SSH key..."
-expect <<EOF
-    spawn ssh-keygen -p -f "$HOME/.ssh/$KEY_NAME"
-    expect "Enter new passphrase (empty for no passphrase):"
-    send -- "$PASSPHRASE\r"
-    expect "Enter same passphrase again:"
-    send -- "$PASSPHRASE\r"
-    expect eof
-EOF
-
 # ensure ssh-agent is running and configured in shell startup
 status "Configuring SSH agent persistence..."
-cat >>"$HOME/.zshrc" <<EOL
+cat >> "$HOME/.zprofile" <<EOL
 
 # SSH Agent Configuration
-if [ -z "\$SSH_AUTH_SOCK" ] && [ -f "\$HOME/.ssh/${KEY_NAME}" ]; then
-    eval "\$(ssh-agent -s)" >/dev/null
-    ssh-add "\$HOME/.ssh/${KEY_NAME}" 2>/dev/null
+if [ -z "\$SSH_AUTH_SOCK" ]; then
+    eval "\$(ssh-agent)" >/dev/null
+    if [ -f "\$HOME/.ssh/${KEY_NAME}" ]; then
+        ssh-add "\$HOME/.ssh/${KEY_NAME}" 2>/dev/null
+    fi
 fi
 EOL
-
 success "SSH key setup completed"
 
-section "Setup Complete"
 success "Development environment setup successfully completed!"
-echo -e "\nNext steps:"
-echo "1. Add your SSH key to GitHub:"
-echo "   cat ~/.ssh/${KEY_NAME}.pub"
-echo "2. Restart your terminal to enjoy your new environment!"
 
 "$HOME/.dotfiles/scripts/dashboard/culers.sh"
