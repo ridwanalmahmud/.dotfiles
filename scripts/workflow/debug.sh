@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ $# -eq 0 ]; then
+if [[ $# -eq 0 ]]; then
     echo "Usage: $0 <binary>"
     exit 1
 fi
@@ -8,7 +8,7 @@ fi
 BINARY="$1"
 SESSION_NAME="(Debug)$(basename "$BINARY")"
 
-if [ ! -f "$BINARY" ]; then
+if [[ ! -f "$BINARY" ]]; then
     echo "Error: Binary '$BINARY' not found"
     exit 1
 fi

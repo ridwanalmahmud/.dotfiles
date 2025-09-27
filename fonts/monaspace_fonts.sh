@@ -46,7 +46,7 @@ process_fonts() {
         font_otf=$(basename "$font")
         local_font="$font_dir/$font_otf"
 
-        if [ -f "$local_font" ]; then
+        if [[ -f "$local_font" ]]; then
             echo "$font.otf already exists"
         else
             echo "Downloading $font_otf..."

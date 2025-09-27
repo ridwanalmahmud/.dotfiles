@@ -9,4 +9,4 @@ curl -fLO "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads
 ```
 
 > [!NOTE]
-> Use (./RUN --help) to find out the usage
+> Use (./startup.sh --help) to find out the usage

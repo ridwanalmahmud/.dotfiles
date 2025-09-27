@@ -2,9 +2,10 @@
 
 set -e
 
-PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
+PKG_MANAGER="yay -Syu --needed --noconfirm"
 
 packages=(
+    sudo
     man-db
     man-pages
     tldr
@@ -18,22 +19,24 @@ packages=(
     perf
     strace
     ltrace
-    # ffmpeg
+    xclip
+    ffmpeg
 
-    # wezterm
+    wezterm
     zsh
     tmux
     git
+    github-cli
     base-devel # for yay
     neovim
 
-    # hyprland
-    # xorg-xwayland
-    # hyprpaper
-    # waybar
-    # rofi
-    # dolphin
-    # zen-browser-bin
+    hyprland
+    xorg-xwayland
+    hyprpaper
+    waybar
+    rofi
+    dolphin
+    zen-browser-bin
 
     nasm
     lld
@@ -46,7 +49,7 @@ packages=(
     ninja
     npm
     pkgconf
-    # docker
+    docker
 
     nmap
     gnu-netcat
@@ -54,9 +57,10 @@ packages=(
     r2ghidra
 )
 
-installed_packages=$(pacman -Qq)
+installed_packages=$(yay -Qq)
 
 packages_to_install=()
+
 for pkg in "${packages[@]}"; do
     if ! echo "$installed_packages" | grep -q "^$pkg$"; then
         packages_to_install+=("$pkg")

@@ -4,28 +4,47 @@ ZSH_THEME="robbyrussell"
 
 plugins=(git zsh-autosuggestions fzf-tab)
 
-unsetopt AUTO_CD
-
 source $ZSH/oh-my-zsh.sh
-source $HOME/.cargo/env
-
-export DISPLAY=:0
-export DOTFILES="$HOME/.dotfiles"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
-export TYPST_FONT_PATHS="$HOME/.local/share/fonts/"
 
 set -o vi
-export EDITOR="nvim"
-export MANPAGER="nvim +Man!"
+source <(fzf --zsh)
 
-alias la="ls -lAvh --group-directories-first"
-alias glog="git --no-pager log --oneline --decorate --graph --parents"
+HISTDUP=erase
+HISTSIZE=5000
+HISTFILE=$HOME/.zsh_history
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_find_no_dups
+setopt globdots
+unsetopt AUTO_CD
+
+fzf_nvim() {
+    selected=$(fzf --multi --style minimal --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')
+    if [ -z $selected ]; then
+        return
+    else
+        nvim $selected
+    fi
+}
+
+alias la="ls --color -lAvh --group-directories-first"
 alias bat="bat --style=numbers --theme=gruvbox-dark --color=always"
 alias fh='eval $(history | fzf --height=50% --layout=reverse --tac | sed "s/^[[:space:]]*[0-9]*[[:space:]]*//")'
-alias vi="nvim \$(fzf --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')"
-alias vistall="nvim $DOTFILES/scripts/setup/install.sh"
-alias vbuild="nvim $DOTFILES/scripts/setup/build.sh"
+alias xsc="xclip -selection clipboard"
+alias glog="git --no-pager log --oneline --decorate --graph --parents"
+alias vi=fzf_nvim
+alias vinstall="nvim $DOTFILES/scripts/setup/install.sh"
+alias vbuild="nvim $DOTFILES/scripts/setup/buildpkgs.sh"
+alias src="source ~/.zshrc"
+alias python="python3"
 
-bindkey -s "^r" "source ~/.zshrc\n"
+bindkey -v
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey "^Xe" edit-command-line
+bindkey "^r" fzf-history-widget
 bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"

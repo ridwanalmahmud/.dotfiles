@@ -8,7 +8,7 @@ show_help() {
     echo -e "<username> Create user with sudo previledge"
     echo -e "<gitname> git config username"
     echo -e "<email> git config email, ssh key comment"
-    echo -e "<ssh_keyname> Create ssh key"
+    echo -e "<ssh_keyname> Create ssh key for github"
     echo -e "<passphrase> Add passphrase to the corresponding ssh key"
     echo -e "\n***Warning! If arguments are not provided properly, setup will abort***\n"
 }
@@ -18,7 +18,7 @@ if [[ "$1" == "--help" ]]; then
     exit 0
 fi
 
-if [ $# -ne 5 ]; then
+if [[ $# -ne 5 ]]; then
     echo "Error: All 5 arguments need to be provided"
     show_help
     exit 1
@@ -26,7 +26,7 @@ fi
 
 if ! command -v sudo &>/dev/null; then
     pacman -Sy sudo --noconfirm || {
-            exit 1
+        exit 1
     }
 else
     echo "sudo already exists"
@@ -47,4 +47,4 @@ echo "Execute the setup script as the $1 user"
 su - $1 -c "curl -fsSL 'https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/startup/setup.sh' | sh -s -- $1 $2 $3 $4 $5"
 
 echo "Add command to switch to $1 user"
-echo "su - $1" >> ~/.bash_profile
+echo "su - $1" >>~/.bash_profile
