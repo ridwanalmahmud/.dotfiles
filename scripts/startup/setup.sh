@@ -9,7 +9,7 @@ NC='\033[0m'
 set -e
 
 section() {
-    echo -e "${BLUE}===${NC} ${GREEN}$1${NC} ${BLUE}===${NC}"
+    echo -e " ${BLUE}===${NC} ${GREEN}$1${NC} ${BLUE}===${NC} "
 }
 
 status() {
@@ -26,20 +26,46 @@ error() {
 
 USER=$1
 GITNAME=$2
-EMAIL=$3
+GITEMAIL=$3
 KEY_NAME="$4"
 PASSPHRASE="$5"
 
-section "Development Environment Setup"
+export XDG_CONFIG_HOME=$HOME/.config
+export DOTFILES="$HOME/.dotfiles"
+export LOCAL_BIN="$HOME/.local/bin"
+
+section "=== System Environment Setup ==="
 
 section "Package Installation"
+status "Yay installation..."
+curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/setup/build.sh" | sh -s -- --yay || {
+    error "Yay installation failed"
+    exit 1
+}
 status "Installing packages..."
-status "Installing necessary packages..."
 curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/setup/install.sh" | sh || {
     error "Failed to run dotfiles install script"
     exit 1
 }
 success "Packages installed"
+
+section "Dotfiles Setup"
+status "Cloning dotfiles repository..."
+git clone https://github.com/ridwanalmahmud/.dotfiles.git $DOTFILES || {
+    error "Failed to clone dotfiles repository"
+    exit 1
+}
+status "Installing fonts..."
+"$DOTFILES/scripts/setup/fonts.sh" || {
+    error "Failed to install fonts"
+    exit 1
+}
+status "Creating symlinks..."
+"$DOTFILES/scripts/setup/symlinks.sh" --overwrite-all || {
+    error "Failed to create symlinks"
+    exit 1
+}
+success "Dotfiles installation complete"
 
 section "ZSH Configuration"
 status "Changing default shell..."
@@ -53,98 +79,46 @@ if [ "$SHELL" != "$ZSH_PATH" ]; then
         exit 1
     }
 fi
-
 status "Installing Oh My Zsh..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" || {
     error "Failed to install Oh My Zsh"
     exit 1
 }
-
 status "Installing zsh plugins..."
 echo "" >"$HOME/.zshrc"
-git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/zsh-autosuggestions || {
+git clone https://github.com/zsh-users/zsh-autosuggestions.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/zsh-autosuggestions || {
     error "Failed to clone zsh-autosuggestions"
     exit 1
 }
-git clone https://github.com/Aloxaf/fzf-tab "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/fzf-tab || {
+git clone https://github.com/Aloxaf/fzf-tab.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/fzf-tab || {
     error "Failed to clone fzf-tab"
     exit 1
 }
 success "Zsh configurations updated..."
 
-section "Dotfiles Setup"
-status "Cloning dotfiles repository..."
-git clone https://github.com/ridwanalmahmud/.dotfiles.git || {
-    error "Failed to clone dotfiles repository"
-    exit 1
-}
-
-status "Installing fonts..."
-"$HOME/.dotfiles/scripts/setup/fonts.sh" || {
-    error "Failed to install fonts"
-    exit 1
-}
-
-status "Creating symlinks..."
-"$HOME/.dotfiles/scripts/setup/symlinks.sh" --overwrite-all || {
-    error "Failed to create symlinks"
-    exit 1
-}
-
-status "Running build script..."
-"$HOME/.dotfiles/scripts/setup/build.sh --yay" || {
-    error "Build script failed"
-    exit 1
-}
-success "Setup complete"
-
 section "Git Configuration"
 status "Setting up git..."
-git config --global user.name "$GITNAME" || {
-    error "Failed to set git user.name"
-    exit 1
-}
-git config --global user.email "$EMAIL" || {
-    error "Failed to set git user.email"
-    exit 1
-}
-git config --global init.defaultBranch master || {
-    error "Failed to set git default branch"
-    exit 1
-}
+git config --global user.name "$GITNAME"
+git config --global user.email "$GITEMAIL"
+git config --global init.defaultBranch master
 success "Git configured successfully"
 
 section "SSH Key Setup"
+SSH_DIR=$HOME/.ssh
 status "Creating SSH directory..."
-mkdir -p "$HOME/.ssh"
-chmod 700 "$HOME/.ssh"
-
-if [ -f "$HOME/.ssh/$KEY_NAME" ]; then
-    error "SSH key already exists at $HOME/.ssh/$KEY_NAME"
+mkdir -p "$SSH_DIR"
+chmod 700 "$SSH_DIR"
+if [[ -f "$SSH_DIR/$KEY_NAME" ]]; then
+    error "SSH key already exists at $SSH_DIR/$KEY_NAME"
     exit 1
 fi
-
-# generate key
 status "Generating new SSH key..."
-ssh-keygen -t ed25519 -f "$HOME/.ssh/$KEY_NAME" -C "$EMAIL" -N "$PASSPHRASE" || {
+$DOTFILES/scripts/setup/sshkey.sh -a "github*" -m "git" -H "github.com" -f "$KEY_NAME" -N "$PASSPHRASE" -C "$GITEMAIL" || {
     error "Failed to generate SSH key"
     exit 1
 }
-
-# ensure ssh-agent is running and configured in shell startup
-status "Configuring SSH agent persistence..."
-cat >> "$HOME/.zprofile" <<EOL
-
-# SSH Agent Configuration
-if [ -z "\$SSH_AUTH_SOCK" ]; then
-    eval "\$(ssh-agent)" >/dev/null
-    if [ -f "\$HOME/.ssh/${KEY_NAME}" ]; then
-        ssh-add "\$HOME/.ssh/${KEY_NAME}" 2>/dev/null
-    fi
-fi
-EOL
 success "SSH key setup completed"
 
-success "Development environment setup successfully completed!"
+success " === System Environment setup successfully completed! === "
 
-"$HOME/.dotfiles/scripts/dashboard/culers.sh"
+"$DOTFILES/scripts/dashboard/culers.sh"

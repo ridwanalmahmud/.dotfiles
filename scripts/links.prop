@@ -1,6 +1,0 @@
-$DOTFILES/scripts/setup/install.sh=$HOME/.local/bin/install
-$DOTFILES/scripts/setup/build.sh=$HOME/.local/bin/build
-$DOTFILES/scripts/setup/symlinks.sh=$HOME/.local/bin/symlinks
-$DOTFILES/scripts/setup/fonts.sh=$HOME/.local/bin/fonts
-$DOTFILES/scripts/workflow/sessionizer.sh=$HOME/.local/bin/tmux-sessionizer
-$DOTFILES/scripts/workflow/debug.sh=$HOME/.local/bin/debug

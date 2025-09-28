@@ -5,8 +5,8 @@ curl -fLO "https://github.com/githubnext/monaspace/raw/HEAD/fonts/NerdFonts/Mona
 
 ## Setup environment
 ```bash
-curl -fLO "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/startup/startup.sh" && chmod 700 startup.sh && ./startup.sh <args>
+curl -fLO "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/startup/startup.sh" && chmod 700 startup.sh && ./startup.sh
 ```
 
 > [!NOTE]
-> Use (./RUN --help) to find out the usage
+> Use (./startup.sh --help) to find out the usage

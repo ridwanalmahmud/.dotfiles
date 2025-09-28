@@ -29,7 +29,7 @@ process_fonts() {
         font_ttf=$(basename "$font")
         local_font="$font_dir/$font_ttf"
 
-        if [ -f "$local_font" ]; then
+        if [[ -f "$local_font" ]]; then
             echo "$font_ttf already exists"
         else
             echo "Downloading $font_ttf..."

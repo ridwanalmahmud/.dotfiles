@@ -21,7 +21,7 @@ link_file() {
     local overwrite_all=$OVERWRITE_ALL
     local overwrite=false backup=false skip=false
 
-    if [ -e "$dst" ]; then
+    if [[ -e "$dst" ]]; then
         local currentSrc=$(readlink "$dst" 2>/dev/null || true)
 
         if [ "$currentSrc" = "$src" ]; then
@@ -44,8 +44,8 @@ link_file() {
                 echo "REMOVED: $dst"
                 ;;
             b)
-                mv "$dst" "${dst}.backup"
-                echo "BACKUP: $dst -> ${dst}.backup"
+                mv "$dst" "${dst}.bak"
+                echo "BACKUP: $dst -> ${dst}.bak"
                 ;;
             s | *)
                 echo "SKIP: $dst"
@@ -62,9 +62,9 @@ link_file() {
 install_dotfiles() {
     echo "Installing dotfiles..."
 
-    find "$DOTFILES" -maxdepth 2 -name 'links.prop' -not -path '*.git*' | while read linkfile; do
+    find "$DOTFILES" -maxdepth 2 -name 'links.sh' -not -path '*.git*' | while read linkfile; do
         while IFS='=' read -r src dst; do
-            [ -z "$src" ] && continue
+            [[ -z "$src" ]] && continue
             src=$(eval echo "$src")
             dst=$(eval echo "$dst")
             dir=$(dirname "$dst")

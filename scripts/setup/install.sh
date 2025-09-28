@@ -2,9 +2,10 @@
 
 set -e
 
-PKG_MANAGER="sudo pacman -Sy --needed --noconfirm"
+PKG_MANAGER="yay -Syu --needed --noconfirm"
 
 packages=(
+    sudo
     man-db
     man-pages
     tldr
@@ -18,6 +19,7 @@ packages=(
     perf
     strace
     ltrace
+    # xclip
     # ffmpeg
 
     # wezterm
@@ -36,7 +38,7 @@ packages=(
     # zen-browser-bin
 
     nasm
-    lld
+    # lld
     llvm
     clang
     typst
@@ -50,13 +52,14 @@ packages=(
 
     nmap
     gnu-netcat
-    radare2
-    r2ghidra
+    # radare2
+    # r2ghidra
 )
 
-installed_packages=$(pacman -Qq)
+installed_packages=$(yay -Qq)
 
 packages_to_install=()
+
 for pkg in "${packages[@]}"; do
     if ! echo "$installed_packages" | grep -q "^$pkg$"; then
         packages_to_install+=("$pkg")

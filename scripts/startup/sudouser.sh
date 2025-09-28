@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 NAME=$1
+PASS=$2
 
 useradd -m $NAME || {
     echo "Failed create user"
     exit 1
 }
 echo "Succesfully created user -- $NAME"
-passwd $NAME || {
+echo "${NAME}:${PASS}" | chpasswd || {
     echo "Failed to change password for $NAME"
     exit 1
 }
