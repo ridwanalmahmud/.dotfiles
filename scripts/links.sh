@@ -4,4 +4,5 @@ $DOTFILES/scripts/setup/sshkey.sh=$LOCAL_BIN/sshkey
 $DOTFILES/scripts/setup/symlinks.sh=$LOCAL_BIN/symlinks
 $DOTFILES/scripts/setup/fonts.sh=$LOCAL_BIN/fonts
 $DOTFILES/scripts/workflow/sessionizer.sh=$LOCAL_BIN/tmux-sessionizer
-$DOTFILES/scripts/workflow/debug.sh=$LOCAL_BIN/debug
+$DOTFILES/scripts/workflow/createproject.sh=$LOCAL_BIN/createproject
+$DOTFILES/scripts/workflow/codecheck.sh=$LOCAL_BIN/codecheck

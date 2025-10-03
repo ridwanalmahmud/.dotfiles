@@ -5,9 +5,10 @@ ZSH_THEME="robbyrussell"
 plugins=(git zsh-autosuggestions fzf-tab)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.cargo/env
+source <(fzf --zsh)
 
 set -o vi
-source <(fzf --zsh)
 
 HISTDUP=erase
 HISTSIZE=5000
@@ -23,14 +24,36 @@ setopt globdots
 unsetopt AUTO_CD
 
 fzf_nvim() {
-    selected=$(fzf --multi --style minimal --preview='bat --theme=gruvbox-dark --style=numbers --color=always {} || cat {}' --preview-window 'right:65%')
-    if [ -z $selected ]; then
+    if [[ $# -gt 0 ]]; then
+        nvim "$@"
         return
-    else
-        nvim $selected
     fi
+
+    local selected=$(fzf --multi --style minimal --preview="bat --color=always {} || cat {}" --preview-window "right:65%")
+    if [[ -z "$selected" ]]; then
+        return
+    fi
+
+    local files=()
+    while IFS= read -r line; do
+        files+=("$line")
+    done <<< "$selected"
+
+    nvim "${files[@]}"
 }
 
+fzf_cd() {
+    local search_dir="${1:-$HOME/loom}"
+    if [[ ! -d "$search_dir" ]]; then
+        return 1
+    fi
+
+    selected=$(find "$search_dir" -type d -not -path "*git*" | fzf --height=50% --layout=reverse)
+    cd "$selected" || return 1
+}
+
+alias z=fzf_cd
+alias o='cd $(git rev-parse --show-toplevel)'
 alias la="ls --color -lAvh --group-directories-first"
 alias bat="bat --style=numbers --theme=gruvbox-dark --color=always"
 alias fh='eval $(history | fzf --height=50% --layout=reverse --tac | sed "s/^[[:space:]]*[0-9]*[[:space:]]*//")'

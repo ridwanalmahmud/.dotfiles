@@ -1,5 +1,3 @@
-source $HOME/.cargo/env
-
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export DOTFILES="$HOME/.dotfiles"
@@ -7,6 +5,9 @@ export LOCAL_BIN="$HOME/.local/bin"
 
 export DISPLAY=:0
 export EDITOR="nvim"
+export PAGER="bat"
+export BAT_THEME="gruvbox-dark"
+export BAT_STYLE="numbers"
 export MANPAGER="nvim +Man!"
 
 export PATH="$HOME/.local/bin:$PATH"

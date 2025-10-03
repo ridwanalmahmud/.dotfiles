@@ -2,10 +2,17 @@
 
 set -e
 
+prog=$(basename "$0")
+
 usage() {
-    echo "Usage: $0 [-a HOST_ALIAS] -m USERNAME -H HOSTNAME -f KEYNAME [-N PASSPHRASE] [-C COMMENT]"
-    exit 1
+    echo "Usage: $prog [-a HOST_ALIAS] -m USERNAME -H HOSTNAME -f KEYNAME [-N PASSPHRASE] [-C COMMENT]"
+    echo -e "Usage: $prog -h|--help [print this msg]"
 }
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    usage
+    exit 0
+fi
 
 while getopts "a:m:H:f:N:C:" opt; do
     case $opt in
@@ -15,7 +22,10 @@ while getopts "a:m:H:f:N:C:" opt; do
     f) KEYNAME="$OPTARG" ;;
     N) PASSPHRASE="$OPTARG" ;;
     C) COMMENT="$OPTARG" ;;
-    *) usage ;;
+    *)
+        usage
+        exit 1
+        ;;
     esac
 done
 shift $((OPTIND - 1))

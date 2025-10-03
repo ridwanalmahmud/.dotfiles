@@ -19,6 +19,7 @@ packages=(
     perf
     strace
     ltrace
+    hurl
     # xclip
     # ffmpeg
 
@@ -52,6 +53,7 @@ packages=(
 
     nmap
     gnu-netcat
+    python-pygments
     # radare2
     # r2ghidra
 )
