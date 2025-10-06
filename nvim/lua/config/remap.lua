@@ -11,8 +11,7 @@ vim.keymap.set({ "n", "v" }, "<leader><leader>", "@:")
 vim.keymap.set("n", "<C-m>", "`")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", {})
-vim.keymap.set({ "n", "t" }, "<C-b>", "<cmd>bnext<CR>")
-vim.keymap.set("n", "<C-p>", "<cmd>bprev<CR>")
+vim.keymap.set({ "n", "t" }, "<C-b>", "<cmd>b#<CR>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -51,7 +50,7 @@ vim.keymap.set("n", "<leader>cc", vim.diagnostic.setqflist)
 vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
 
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod 744 %<CR>", { silent = true })
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 -- plugin remaps

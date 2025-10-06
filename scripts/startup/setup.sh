@@ -35,7 +35,6 @@ export DOTFILES="$HOME/.dotfiles"
 export LOCAL_BIN="$HOME/.local/bin"
 
 section "=== System Environment Setup ==="
-
 section "Package Installation"
 status "Yay installation..."
 curl -fsSL "https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/setup/build.sh" | sh -s -- --yay || {
@@ -118,7 +117,6 @@ $DOTFILES/scripts/setup/sshkey.sh -a "github*" -m "git" -H "github.com" -f "$KEY
     exit 1
 }
 success "SSH key setup completed"
-
 success " === System Environment setup successfully completed! === "
 
 "$DOTFILES/scripts/dashboard/culers.sh"

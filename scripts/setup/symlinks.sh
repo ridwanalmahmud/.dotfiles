@@ -18,7 +18,6 @@ done
 
 link_file() {
     local src=$1 dst=$2
-    local overwrite_all=$OVERWRITE_ALL
     local overwrite=false backup=false skip=false
 
     if [[ -e "$dst" ]]; then
@@ -29,7 +28,7 @@ link_file() {
             return
         fi
 
-        if [ "$overwrite_all" = "true" ]; then
+        if [ "$OVERWRITE_ALL" = "true" ]; then
             rm -rf "$dst"
             echo "REMOVED: $dst (overwrite all)"
         else

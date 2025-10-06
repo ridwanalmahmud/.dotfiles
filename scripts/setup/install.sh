@@ -10,18 +10,21 @@ packages=(
     man-pages
     tldr
     wget
+    zip
     websocat
     bat
     fzf
     tree
     ripgrep
 
+    rsync
     perf
     strace
     ltrace
     hurl
     # xclip
     # ffmpeg
+    # zathura
 
     # wezterm
     zsh
@@ -35,7 +38,7 @@ packages=(
     # hyprpaper
     # waybar
     # rofi
-    # dolphin
+    # yazi
     # zen-browser-bin
 
     nasm

@@ -52,6 +52,14 @@ fzf_cd() {
     cd "$selected" || return 1
 }
 
+bat_strace() {
+    stdbuf -o0 strace "$@" 2>&1 | bat --no-pager -l c
+}
+
+bat_ltrace() {
+    stdbuf -o0 ltrace "$@" 2>&1 | bat --no-pager -l c
+}
+
 alias z=fzf_cd
 alias o='cd $(git rev-parse --show-toplevel)'
 alias la="ls --color -lAvh --group-directories-first"
@@ -62,12 +70,16 @@ alias glog="git --no-pager log --oneline --decorate --graph --parents"
 alias vi=fzf_nvim
 alias vinstall="nvim $DOTFILES/scripts/setup/install.sh"
 alias vbuild="nvim $DOTFILES/scripts/setup/buildpkgs.sh"
-alias src="source ~/.zshrc"
 alias python="python3"
+alias strace=bat_strace
+alias ltrace=bat_ltrace
 
 bindkey -v
 autoload -U edit-command-line
 zle -N edit-command-line
+bindkey "^g" fzf-history-widget
 bindkey "^Xe" edit-command-line
-bindkey "^r" fzf-history-widget
-bindkey -s "^f" "~/.local/bin/tmux-sessionizer\n"
+bindkey -s "^r" "source ~/.zshrc\n"
+bindkey -s "^p" "$DOTFILES/scripts/workflow/tmux-cht.sh\n"
+bindkey -s "^f" "$DOTFILES/scripts/workflow/tmux-sessionizer.sh\n"
+bindkey -s "^y" "yazi\n"
