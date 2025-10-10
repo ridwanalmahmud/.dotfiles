@@ -7,3 +7,4 @@ $DOTFILES/zsh/profile.zsh=$HOME/.zprofile
 $DOTFILES/tmux/tmux.conf=$HOME/.tmux.conf
 $DOTFILES/misc/radare.conf=$HOME/.radare2rc
 $DOTFILES/misc/gdb.conf=$HOME/.gdbinit
+$DOTFILES/misc/input.conf=$HOME/.inputrc

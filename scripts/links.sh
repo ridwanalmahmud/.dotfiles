@@ -7,3 +7,4 @@ $DOTFILES/scripts/workflow/tmux-sessionizer.sh=$LOCAL_BIN/tmux-sessionizer
 $DOTFILES/scripts/workflow/tmux-cht.sh=$LOCAL_BIN/cht
 $DOTFILES/scripts/workflow/createproject.sh=$LOCAL_BIN/createproject
 $DOTFILES/scripts/workflow/codecheck.sh=$LOCAL_BIN/codecheck
+$DOTFILES/scripts/workflow/fzfm.sh=$LOCAL_BIN/fzfm

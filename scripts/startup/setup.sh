@@ -84,7 +84,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
     exit 1
 }
 status "Installing zsh plugins..."
-echo "" >"$HOME/.zshrc"
 git clone https://github.com/zsh-users/zsh-autosuggestions.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}"/plugins/zsh-autosuggestions || {
     error "Failed to clone zsh-autosuggestions"
     exit 1
@@ -93,6 +92,9 @@ git clone https://github.com/Aloxaf/fzf-tab.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/
     error "Failed to clone fzf-tab"
     exit 1
 }
+status "Renaming .zshrc"
+rm $HOME/.zshrc
+mv $HOME/zshrc.pre-oh-my-zsh $HOME/.zshrc
 success "Zsh configurations updated..."
 
 section "Git Configuration"

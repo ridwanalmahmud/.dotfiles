@@ -53,11 +53,11 @@ ssh-keygen -t ed25519 -f "$SSH_DIR/$KEYNAME" -N "$PASSPHRASE" -C "$COMMENT" || {
 }
 
 cat >>"$SSH_DIR/config" <<EOL
-
 Host $HOSTALIAS
     User $USERNAME
     HostName $HOSTNAME
     IdentityFile $SSH_DIR/$KEYNAME
     IdentitiesOnly yes
     AddKeysToAgent yes
+
 EOL

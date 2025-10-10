@@ -24,8 +24,8 @@ check_pass() {
     local var_name="$2"
 
     while true; do
-        read -s -p "$prompt" password1 && echo ""
-        read -s -p "Verify $prompt" password2 && echo ""
+        read -s -e -p "$prompt" password1 && echo ""
+        read -s -e -p "Verify $prompt" password2 && echo ""
 
         if [ "$password1" = "$password2" ]; then
             eval "$var_name=\"$password1\""
@@ -36,11 +36,11 @@ check_pass() {
     done
 }
 
-read -p "Username: " USERNAME
+read -e -p "Username: " USERNAME
 check_pass "Userpass: " USERPASS
-read -p "Fullname: " GITNAME
-read -p "Email: " GITEMAIL
-read -p "SSH key: " KEY_NAME
+read -e -p "Fullname: " GITNAME
+read -e -p "Email: " GITEMAIL
+read -e -p "SSH key: " KEY_NAME
 check_pass "SSH Passphrase: " PASSPHRASE
 
 if ! command -v sudo &>/dev/null; then
@@ -65,5 +65,4 @@ pacman -Syu --needed --noconfirm || {
 echo "Execute the setup script as the $1 user"
 su - $USERNAME -c "curl -fsSL 'https://raw.githubusercontent.com/ridwanalmahmud/.dotfiles/refs/heads/master/scripts/startup/setup.sh' | sh -s -- $USERNAME $GITNAME $GITEMAIL $KEY_NAME $PASSPHRASE"
 
-echo "Add command to switch to $1 user"
 echo "su - $USERNAME" >>~/.bash_profile
