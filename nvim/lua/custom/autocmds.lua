@@ -10,6 +10,12 @@ local lang_maps = {
     c = {
         build = "mkdir -p build && cmake -B build -G Ninja && cmake --build build --parallel $(nproc)",
         exec = "ninja -C build run",
+        -- === add this to CMakeLists.txt for custom run command ===
+        -- add_custom_target(run
+        -- COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
+        -- DEPENDS ${PROJECT_NAME}
+        -- WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        -- USES_TERMINALL)
         test = "mkdir -p build && ctest --test-dir build --output-on-failure",
     },
     cpp = {

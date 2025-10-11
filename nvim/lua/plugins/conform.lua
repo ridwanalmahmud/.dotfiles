@@ -12,6 +12,7 @@ return {
                 rust = { "rustfmt" },
                 python = { "ruff" },
                 sh = { "shfmt" },
+                zsh = { "shfmt" },
                 typst = { "typstyle" },
                 json = { "clang_format" },
                 yaml = { "yamlfmt" },

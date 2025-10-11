@@ -28,8 +28,10 @@ return {
                 file_ignore_patterns = { "^.git/" }, -- Extra safety
             })
         end, {})
-        vim.keymap.set("n", "<leader>gf", builtin.git_files, {})
-        vim.keymap.set("n", "<leader>ps", builtin.live_grep, {})
+
+        vim.keymap.set("n", "<leader>sb", builtin.buffers, {})
+        vim.keymap.set("n", "<leader>g", builtin.live_grep, {})
+        vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
 
         vim.keymap.set("n", "<leader>pws", function()
             local word = vim.fn.expand("<cword>")
@@ -39,7 +41,6 @@ return {
             local word = vim.fn.expand("<cWORD>")
             builtin.grep_string({ search = word })
         end)
-        vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
 
         vim.keymap.set("n", "<leader>cf", function()
             builtin.find_files({ cwd = "~/.dotfiles/" })

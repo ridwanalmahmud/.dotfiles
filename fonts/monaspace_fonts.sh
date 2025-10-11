@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 FONT_PATH=$HOME/.local/share/fonts
 
 argon_dir=$FONT_PATH/monaspace_argon
@@ -44,7 +46,7 @@ process_fonts() {
         font_otf=$(basename "$font")
         local_font="$font_dir/$font_otf"
 
-        if [ -f "$local_font" ]; then
+        if [[ -f "$local_font" ]]; then
             echo "$font.otf already exists"
         else
             echo "Downloading $font_otf..."
