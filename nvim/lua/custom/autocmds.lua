@@ -8,30 +8,24 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 local lang_maps = {
     c = {
-        build = "mkdir -p build && cmake -B build -G Ninja && cmake --build build --parallel $(nproc)",
-        exec = "ninja -C build run",
-        -- add_custom_target(run
-        -- COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
-        -- DEPENDS ${PROJECT_NAME}
-        -- WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        -- USES_TERMINALL)
-        -- add this to CMakeLists.txt
-    test = "mkdir -p build && ctest --test-dir build --output-on-failure",
-},
-cpp = {
-    build = "mkdir -p build && cmake -B build -G Ninja && cmake --build build --parallel $(nproc)",
-    exec = "ninja -C build run",
-    test = "mkdir -p build && ctest --test-dir build --output-on-failure",
-},
-rust = { build = "cargo build", exec = "cargo run", test = "cargo test" },
-go = { build = "go build", exec = "go run .", test = "go test ./..." },
-sh = { exec = "./%" },
-python = { exec = "python %", test = "python -m pytest" },
+        build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
+        exec = "./run",
+        test = "mkdir -p build && ctest --test-dir build --output-on-failure",
+    },
+    cpp = {
+        build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
+        exec = "./run",
+        test = "mkdir -p build && ctest --test-dir build --output-on-failure",
+    },
+    rust = { build = "cargo build", exec = "cargo run", test = "cargo test" },
+    go = { build = "go build", exec = "go run .", test = "go test ./..." },
+    sh = { exec = "./%" },
+    python = { exec = "python %", test = "python -m pytest" },
 }
 
 local makefile_cmds = {
     build = "make",
-    exec = "make run",
+    exec = "./run",
     test = "make test",
 }
 

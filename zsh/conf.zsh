@@ -5,7 +5,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git zsh-autosuggestions fzf-tab)
 
 source $ZSH/oh-my-zsh.sh
-source $DOTFILES/zsh/remaps.zsh
+source $DOTFILES/zsh/keybinds.zsh
 source $HOME/.cargo/env
 source <(fzf --zsh)
 
@@ -24,4 +24,4 @@ setopt hist_find_no_dups
 setopt globdots
 unsetopt AUTO_CD
 
-bindkey -s "^r" "source $DOTFILES/zsh/remaps.zsh\n"
+bindkey -s "^r" "source $DOTFILES/zsh/keybinds.zsh\n"

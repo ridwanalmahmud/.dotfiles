@@ -1,9 +1,9 @@
 return {
     {
         "norcalli/nvim-colorizer.lua",
-        config = function ()
+        config = function()
             require("colorizer").setup()
-        end
+        end,
     },
     {
         "sainnhe/gruvbox-material",
