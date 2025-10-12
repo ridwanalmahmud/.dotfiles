@@ -2,6 +2,7 @@ return {
     "saghen/blink.cmp",
     dependencies = {
         "rafamadriz/friendly-snippets",
+        "folke/lazydev.nvim",
         {
             "L3MON4D3/LuaSnip",
             version = "v2.*",
@@ -40,7 +41,14 @@ return {
             },
         },
         sources = {
-            default = { "lsp", "path", "snippets", "buffer" },
+            default = { "lsp", "path", "snippets", "buffer", "lazydev" },
+            providers = {
+                lazydev = {
+                    name = "LazyDev",
+                    module = "lazydev.integrations.blink",
+                    score_offset = 100,
+                },
+            },
         },
         fuzzy = { implementation = "prefer_rust_with_warning" },
         signature = { enabled = true },
