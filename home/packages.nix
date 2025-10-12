@@ -7,22 +7,27 @@
         hyprpaper
         waybar
         rofi
-        kdePackages.dolphin
+        yazi
 
         man-db
         man-pages
         tldr
         wget
+        zip
         websocat
         bat
         fzf
         tree
         ripgrep
 
+        rsync
         linuxPackages.perf
         strace
         ltrace
+        hurl
         ffmpeg
+        xclip
+        zathura
 
         wezterm
         zsh
@@ -44,6 +49,7 @@
         docker
 
         nmap
+        python313Packages.pygments
         netcat-gnu
         radare2
     ];
