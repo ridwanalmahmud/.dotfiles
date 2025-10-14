@@ -5,7 +5,7 @@ set -e
 prog=$(basename "$0")
 
 usage() {
-    echo "Usage: $prog [-a HOST_ALIAS] -m USERNAME -H HOSTNAME -f KEYNAME [-N PASSPHRASE] [-C COMMENT]"
+    echo "Usage: $prog [-a HOST_ALIAS] -m username -H hostname -f keyname [-N passphrase] [-C comment]"
     echo -e "Usage: $prog -h|--help [print this msg]"
 }
 
@@ -16,12 +16,12 @@ fi
 
 while getopts "a:m:H:f:N:C:" opt; do
     case $opt in
-    a) HOSTALIAS="$OPTARG" ;;
-    m) USERNAME="$OPTARG" ;;
-    H) HOSTNAME="$OPTARG" ;;
-    f) KEYNAME="$OPTARG" ;;
-    N) PASSPHRASE="$OPTARG" ;;
-    C) COMMENT="$OPTARG" ;;
+    a) hostalias="$OPTARG" ;;
+    m) username="$OPTARG" ;;
+    H) hostname="$OPTARG" ;;
+    f) keyname="$OPTARG" ;;
+    N) passphrase="$OPTARG" ;;
+    C) comment="$OPTARG" ;;
     *)
         usage
         exit 1
@@ -30,33 +30,33 @@ while getopts "a:m:H:f:N:C:" opt; do
 done
 shift $((OPTIND - 1))
 
-if [[ -z "$USERNAME" || -z "$HOSTNAME" || -z "$KEYNAME" ]]; then
+if [[ -z "$username" || -z "$hostname" || -z "$keyname" ]]; then
     usage
 fi
 
-: "${HOSTALIAS:=$HOSTNAME}"
-: "${PASSPHRASE:=}"
-: "${COMMENT:=}"
+: "${hostalias:=$hostname}"
+: "${passphrase:=}"
+: "${comment:=}"
 
-SSH_DIR=$HOME/.ssh
-mkdir -p "$SSH_DIR"
-chmod 700 "$SSH_DIR"
+ssh_dir=$HOME/.ssh
+mkdir -p "$ssh_dir"
+chmod 700 "$ssh_dir"
 
-if [[ -f "$SSH_DIR/$KEYNAME" ]]; then
-    echo "SSH key already exists at $SSH_DIR/$KEYNAME"
+if [[ -f "$ssh_dir/$keyname" ]]; then
+    echo "SSH key already exists at $ssh_dir/$keyname"
     exit 1
 fi
 
-ssh-keygen -t ed25519 -f "$SSH_DIR/$KEYNAME" -N "$PASSPHRASE" -C "$COMMENT" || {
+ssh-keygen -t ed25519 -f "$ssh_dir/$keyname" -N "$passphrase" -C "$comment" || {
     echo "Failed to generate SSH key"
     exit 1
 }
 
-cat >>"$SSH_DIR/config" <<EOL
-Host $HOSTALIAS
-    User $USERNAME
-    HostName $HOSTNAME
-    IdentityFile $SSH_DIR/$KEYNAME
+cat >>"$ssh_dir/config" <<EOL
+Host $hostalias
+    User $username
+    HostName $hostname
+    IdentityFile $ssh_dir/$keyname
     IdentitiesOnly yes
     AddKeysToAgent yes
 
