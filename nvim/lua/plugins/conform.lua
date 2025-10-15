@@ -2,7 +2,9 @@ return {
     "stevearc/conform.nvim",
     opts = {},
     config = function()
-        require("conform").setup({
+        local conform = require("conform")
+
+        conform.setup({
             formatters_by_ft = {
                 lua = { "stylua" },
                 nix = { "nixpkgs-fmt" },
@@ -36,5 +38,9 @@ return {
                 },
             },
         })
+
+        vim.keymap.set("n", "<leader>f", function()
+            conform.format({ bufnr = 0 })
+        end, { desc = "Conform format" })
     end,
 }

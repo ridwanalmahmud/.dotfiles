@@ -30,7 +30,6 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 -- lsp remaps
 vim.keymap.set("n", "H", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
-vim.keymap.set("n", "gD", vim.lsp.buf.declaration, {})
 vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
 -- diagnostic
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {})
@@ -47,11 +46,3 @@ vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz")
 
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod 744 %<CR>", { silent = true })
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-
--- plugin remaps
-vim.keymap.set("n", "<leader>pv", "<cmd>Oil<CR>")
-vim.keymap.set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>")
-vim.keymap.set("n", "<leader>dv", "<cmd>DapViewToggle<CR>")
-vim.keymap.set("n", "<leader>f", function()
-    require("conform").format({ bufnr = 0 })
-end)

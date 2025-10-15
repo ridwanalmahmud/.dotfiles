@@ -26,5 +26,7 @@ return {
                 return path_of_buffer
             end,
         })
+
+        vim.keymap.set("n", "<leader>tp", "<cmd>TypstPreviewToggle<CR>", { desc = "Typst preview" })
     end,
 }

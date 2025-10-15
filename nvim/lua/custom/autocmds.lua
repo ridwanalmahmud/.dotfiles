@@ -57,17 +57,17 @@ for lang, cmds in pairs(lang_maps) do
             if effective_cmds.build then
                 vim.keymap.set("n", "<leader>B", function()
                     send_to_tmux(effective_cmds.build)
-                end, { buffer = true })
+                end, { buffer = true, desc = "Tmux runner build" })
             end
             if effective_cmds.exec then
                 vim.keymap.set("n", "<leader>R", function()
                     send_to_tmux(effective_cmds.exec)
-                end, { buffer = true })
+                end, { buffer = true, desc = "Tmux runner execute" })
             end
             if effective_cmds.test then
                 vim.keymap.set("n", "<leader>T", function()
                     send_to_tmux(effective_cmds.test)
-                end, { buffer = true })
+                end, { buffer = true, desc = "Tmux runner test" })
             end
         end,
     })
@@ -78,4 +78,4 @@ vim.keymap.set("n", "<leader>X", function()
         vim.fn.system("tmux kill-pane -t " .. command_pane)
         command_pane = nil
     end
-end)
+end, { desc = "Tmux runner kill pane" })

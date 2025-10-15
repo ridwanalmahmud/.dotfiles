@@ -27,7 +27,7 @@ bat_ltrace() {
 
 z() {
     local search_dir="${1:-$HOME/loom}"
-    local selected=($($DOTFILES/scripts/workflow/fzfm.sh "$search_dir"))
+    local selected=($($DOTFILES/scripts/fzfm/fzfm.sh "$search_dir"))
 
     if [[ "${#selected[@]}" -eq 0 ]]; then
         return

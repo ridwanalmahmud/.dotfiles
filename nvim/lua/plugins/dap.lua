@@ -33,14 +33,14 @@ return {
 
         dap.configurations.cpp = dap.configurations.c
 
-        vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
         vim.keymap.set("n", "<leader>dB", function()
             dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
-        end)
-        vim.keymap.set("n", "<leader>c", dap.continue)
-        vim.keymap.set("n", "<F10>", dap.step_over)
-        vim.keymap.set("n", "<F11>", dap.step_into)
-        vim.keymap.set("n", "<F12>", dap.step_out)
+        end, { desc = "Dap set conditional breakpoint" })
+        vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Dap set breakpoint" })
+        vim.keymap.set("n", "<leader>c", dap.continue, { desc = "Dap continue" })
+        vim.keymap.set("n", "<F10>", dap.step_over, { desc = "Dap step over" })
+        vim.keymap.set("n", "<F11>", dap.step_into, { desc = "Dap step into" })
+        vim.keymap.set("n", "<F12>", dap.step_out, { desc = "Dap step out" })
 
         local layout_size = 0.25
         require("dapui").setup({
