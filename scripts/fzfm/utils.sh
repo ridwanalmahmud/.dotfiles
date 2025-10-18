@@ -86,4 +86,5 @@ fzf_create_project() {
 
     $DOTFILES/scripts/workflow/createproject.sh -d $selected -N $project_name -t $project_type -B $build_type -L $lib_support
 }
+
 export -f fzf_touch fzf_mkdir fzf_copy fzf_move fzf_remove fzf_chmod fzf_create_project
