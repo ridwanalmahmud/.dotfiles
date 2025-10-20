@@ -124,6 +124,12 @@ return {
             s("makefile_cpp", makefile_snippet("c++", "clang++", "c++17", "*.cpp", "gtest")),
         })
 
+        ls.add_snippets("sh", {
+            s("bashpath", {
+                t({ "#!/usr/bin/env bash" }),
+            }),
+        })
+
         -- Typst snippet
         ls.add_snippets("typst", {
             s("typst", {
@@ -152,7 +158,7 @@ return {
                 t({ "", "        fill: blue," }),
                 t({ "", "    )[" }),
                 i(1, "Typst"),
-                t({ "])"}),
+                t({ "])" }),
                 t({ "", "]" }),
             }),
         })

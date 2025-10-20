@@ -100,7 +100,6 @@ create_c_cpp_struct() {
 
     if [[ "$BUILD_SYSTEM" == "make" ]]; then
         touch "$project_dir/Makefile"
-        cp $DOTFILES/scripts/workflow/devutils/compile_flags.txt $project_dir
     elif [[ "$BUILD_SYSTEM" == "cmake" ]]; then
         touch "$project_dir/CMakeLists.txt" "$project_dir/tests/CMakeLists.txt"
         mkdir -p "$cmake_dir"

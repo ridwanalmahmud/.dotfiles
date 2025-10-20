@@ -31,20 +31,27 @@ declare -A NORMAL_BINDINGS=(
     [k]="up"
     [l]="accept"
     [h]="pos(2)+accept"
+    [g]="pos(3)"
+    [G]="pos(-1)"
     [K]="preview-up"
     [J]="preview-down"
     [q]="abort"
+    [Q]="abort"
     [i]="execute(bash -c 'fzf_insert $mode_file && touch $restart_file')+abort"
     [t]="execute(bash -c 'fzf_touch {+}')+reload(\$find_cmd)"
     [o]="execute(bash -c 'fzf_mkdir {+}')+reload(\$find_cmd)"
     [y]="execute(bash -c 'fzf_copy {+}')+reload(\$find_cmd)"
     [m]="execute(bash -c 'fzf_move {+}')+reload(\$find_cmd)"
+    [r]="execute(bash -c 'fzf_rename {+}')+reload(\$find_cmd)"
     [d]="execute(bash -c 'fzf_remove {+}')+reload(\$find_cmd)"
     [x]="execute(bash -c 'fzf_chmod {+}')+reload(\$find_cmd)"
 )
 
 declare -A INSERT_BINDINGS=(
-    [ctrl-h]="execute(bash -c 'fzf_normal $mode_file && touch $restart_file')+abort"
+    [esc]="execute(bash -c 'fzf_normal $mode_file && touch $restart_file')+abort"
+    [ctrl-q]="abort"
+    [ctrl-l]="accept"
+    [ctrl-h]="pos(2)+accept"
 )
 
 build_bind_keys() {
@@ -58,8 +65,7 @@ build_bind_keys() {
         bind_keys+=",$key:$binding"
     done
 
-    cwd=$(echo "$PWD" | sed "s|^$HOME/||")
-    bind_keys+=",focus:transform-header:echo \[$mode\] $cwd"
+    bind_keys+=",focus:transform-header:echo \[$mode\]"
     echo "${bind_keys#,}"
 }
 

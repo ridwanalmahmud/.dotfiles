@@ -15,10 +15,14 @@ local capabilities = vim.tbl_deep_extend(
     cmp.get_lsp_capabilities()
 )
 
+vim.lsp.config("*", {
+    capabilities = capabilities,
+    root_markers = { ".git" },
+})
+
 vim.lsp.config("lua_ls", {
     cmd = { "lua-language-server" },
     filetypes = { "lua" },
-    capabilities = capabilities,
     settings = {
         Lua = {
             diagnostics = {
@@ -43,7 +47,6 @@ vim.lsp.config("bashls", {
         "start",
     },
     filetypes = { "sh", "zsh" },
-    capabilities = capabilities,
 })
 
 vim.lsp.config("clangd", {
@@ -55,18 +58,23 @@ vim.lsp.config("clangd", {
         "--query-driver=/usr/bin/clang*",
     },
     filetypes = { "c", "cpp" },
-    capabilities = capabilities,
     init_options = {
         usePlaceholders = true,
         completeUnimported = true,
         clangdFileStatus = true,
+        fallbackFlags = {
+            "-I" .. vim.fn.getcwd() .. "/include",
+            "-Wall",
+            "-Wextra",
+            "-pedantic",
+            "-D_GNU_SOURCE",
+        },
     },
 })
 
 vim.lsp.config("cmake", {
     cmd = { "cmake-language-server" },
     filetypes = { "cmake" },
-    capabilities = capabilities,
 })
 
 vim.lsp.config("rust_analyzer", {
@@ -77,13 +85,11 @@ vim.lsp.config("rust_analyzer", {
         "rust-analyzer",
     },
     filetypes = { "rust" },
-    capabilities = capabilities,
 })
 
 vim.lsp.config("tinymist", {
     cmd = { "tinymist" },
     filetypes = { "typst" },
-    capabilities = capabilities,
     settings = {
         formatterMode = "typstyle",
         exportPdf = "never",
