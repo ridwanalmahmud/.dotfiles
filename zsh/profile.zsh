@@ -6,6 +6,7 @@ export PERSONAL="$HOME/loom"
 
 export DISPLAY=:0
 export EDITOR="nvim"
+export FZFM_EDITOR=$EDITOR
 export FZFM_PDF_READER="zathura"
 export PAGER="bat"
 export BAT_THEME="gruvbox-dark"

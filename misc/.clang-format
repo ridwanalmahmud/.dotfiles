@@ -37,7 +37,7 @@ BreakBeforeBinaryOperators: None
 ColumnLimit: 80
 IndentCaseLabels: false
 IndentGotoLabels: false
-IndentPPDirectives: None
+IndentPPDirectives: AfterHash
 IndentWidth: 4
 KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 1
