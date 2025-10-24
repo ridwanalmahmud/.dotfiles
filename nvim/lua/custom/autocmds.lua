@@ -6,15 +6,24 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
+-- build, run && test
+local function get_executable_name()
+    return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
+end
+
 local lang_maps = {
     c = {
         build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
-        exec = "./run",
+        exec = function()
+            return "./build/" .. get_executable_name()
+        end,
         test = "mkdir -p build && ctest --test-dir build --output-on-failure",
     },
     cpp = {
         build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
-        exec = "./run",
+        exec = function()
+            return "./build/" .. get_executable_name()
+        end,
         test = "mkdir -p build && ctest --test-dir build --output-on-failure",
     },
     rust = { build = "cargo build", exec = "cargo run", test = "cargo test" },
@@ -25,7 +34,7 @@ local lang_maps = {
 
 local makefile_cmds = {
     build = "make",
-    exec = "./run",
+    exec = "make run",
     test = "make test",
 }
 

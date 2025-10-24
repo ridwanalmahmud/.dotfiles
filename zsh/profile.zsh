@@ -1,8 +1,17 @@
 export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
 export XDG_CACHE_HOME=$HOME/.cache
+
+export PERSONAL="$HOME/loom"
 export DOTFILES="$HOME/.dotfiles"
 export LOCAL_BIN="$HOME/.local/bin"
-export PERSONAL="$HOME/loom"
+export LOCAL_LIB="$HOME/.local/lib"
+export LOCAL_INC="$HOME/.local/include"
+
+export PATH="$LOCAL_BIN:$PATH"
+export PATH="$XDG_DATA_HOME/nvim/mason/bin:$PATH"
+export PKG_CONFIG_PATH="$LOCAL_LIB/pkgconfig:$PKG_CONFIG_PATH"
+export TYPST_FONT_PATHS="$XDG_DATA_HOME/fonts/"
 
 export DISPLAY=:0
 export EDITOR="nvim"
@@ -12,11 +21,6 @@ export PAGER="bat"
 export BAT_THEME="gruvbox-dark"
 export BAT_STYLE="numbers"
 export MANPAGER="nvim +Man!"
-
-export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/.local/share/nvim/mason/bin:$PATH"
-export TYPST_FONT_PATHS="$HOME/.local/share/fonts/"
 
 # SSH Agent Configuration
 if [ -z "$SSH_AUTH_SOCK" ]; then

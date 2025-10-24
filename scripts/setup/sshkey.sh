@@ -6,7 +6,7 @@ prog=$(basename "$0")
 
 usage() {
     echo "Usage: $prog [-a HOST_ALIAS] -m username -H hostname -f keyname [-N passphrase] [-C comment]"
-    echo -e "Usage: $prog -h|--help [print this msg]"
+    echo -e "Usage: $prog -h | --help [print this msg]"
 }
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
