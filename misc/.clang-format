@@ -34,7 +34,7 @@ BraceWrapping:
   SplitEmptyNamespace: true
 BreakBeforeBraces: Attach
 BreakBeforeBinaryOperators: None
-ColumnLimit: 80
+ColumnLimit: 100
 IndentCaseLabels: false
 IndentGotoLabels: false
 IndentPPDirectives: AfterHash

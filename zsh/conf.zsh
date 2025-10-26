@@ -22,6 +22,7 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_find_no_dups
 setopt globdots
+setopt no_banghist
 unsetopt AUTO_CD
 
 bindkey -s "^r" "source $DOTFILES/zsh/keybinds.zsh\n"

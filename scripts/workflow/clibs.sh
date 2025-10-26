@@ -17,7 +17,7 @@ fi
 while getopts "a:l:L:d:v:" opt; do
     case $opt in
     a) lib_name="$OPTARG" ;;
-    l) lib_files="$OPTARG" ;;
+    l) lib_src="$OPTARG" ;;
     L) lib_so="$OPTARG" ;;
     d) description="$OPTARG" ;;
     v) version="$OPTARG" ;;
@@ -29,22 +29,26 @@ while getopts "a:l:L:d:v:" opt; do
 done
 shift $((OPTIND - 1))
 
-if [[ -z "$lib_name" || -z "$lib_files" ]]; then
+if [[ -z "$lib_name" || -z "$lib_src" ]]; then
     usage
     exit 1
 fi
 
 version="${version:-1.0.0}"
 
-mkdir -p "$LOCAL_INC/$lib_name"
-mkdir -p "$LOCAL_LIB/pkgconfig"
+mkdir -p "${LOCAL_INC:-/usr/local/include}/$lib_name"
+mkdir -p "${LOCAL_LIB:-/usr/local/lib}/pkgconfig"
 
-if [[ -f "$lib_files" ]]; then
-    cp "$lib_files" "$LOCAL_INC/$lib_name/"
-elif [[ -d "$lib_files" ]]; then
-    cp -r "$lib_files/"* "$LOCAL_INC/$lib_name/"
+if [[ -f "$lib_src" ]]; then
+    cp "$lib_src" "$LOCAL_INC/$lib_name/"
+elif [[ -d "$lib_src" ]]; then
+    if command -v rg &>/dev/null; then
+        rg "$lib_src" --hidden --files --glob "!**/.git/*" | xargs -I{} cp --parents {} "$LOCAL_INC/$lib_name/"
+    else
+        git-ls | xargs -I{} cp --parents {} "$LOCAL_INC/$lib_name"
+    fi
 else
-    echo "Error: $lib_files is neither a file nor a directory" >&2
+    echo "Error: $lib_src is neither a file nor a directory" >&2
     exit 1
 fi
 
