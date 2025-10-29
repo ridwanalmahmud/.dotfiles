@@ -33,6 +33,7 @@ PASSPHRASE="$5"
 export XDG_CONFIG_HOME=$HOME/.config
 export DOTFILES="$HOME/.dotfiles"
 export LOCAL_BIN="$HOME/.local/bin"
+export PERSONAL="$HOME/loom"
 
 section "=== System Environment Setup ==="
 section "Package Installation"

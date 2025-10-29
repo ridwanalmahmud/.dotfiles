@@ -47,6 +47,7 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 
 vim.o.guicursor = ""
+vim.opt.winborder = "rounded"
 vim.opt.termguicolors = true
 vim.opt.smoothscroll = true
 

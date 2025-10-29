@@ -10,11 +10,7 @@ return {
                     "rust",
                     "cpp",
                     "lua",
-                    "make",
-                    "cmake",
                     "tmux",
-                    "typst",
-                    "nix",
                 },
 
                 sync_install = false,

@@ -4,7 +4,7 @@ fzf_nvim() {
         return
     fi
 
-    local selected=$(fzf --multi --style minimal --preview="bat --color=always {} || cat {}" --preview-window "right:65%")
+    local selected=$(fzf --multi --preview="bat --color=always {} || cat {}" --preview-window "right:65%")
     if [[ -z "$selected" ]]; then
         return
     fi
@@ -41,8 +41,9 @@ alias ltrace=bat_ltrace
 bindkey -v
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey "^g" fzf-history-widget
 bindkey "^Xe" edit-command-line
+bindkey -M vicmd v edit-command-line
+bindkey "^g" fzf-history-widget
 bindkey -s "^p" "$DOTFILES/scripts/workflow/tmux-cht.sh\n"
 bindkey -s "^f" "$DOTFILES/scripts/workflow/tmux-sessionizer.sh\n"
 bindkey -s "^y" "yazi\n"
