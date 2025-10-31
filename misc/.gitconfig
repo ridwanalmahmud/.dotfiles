@@ -1,0 +1,23 @@
+[user]
+    name = ridwanalmahmud
+    email = ridwanalmahmud107@gmail.com
+
+[init]
+    defaultBranch = master
+
+[core]
+    editor = nvim
+    excludesFile = ~/.gitignore
+
+[push]
+    default = current
+    rebase = true
+
+[rebase]
+    autoStash = true
+
+[diff]
+    tool = nvimdiff
+
+[merge]
+    tool = nvimdiff

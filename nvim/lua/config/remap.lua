@@ -11,7 +11,6 @@ vim.keymap.set({ "n", "v" }, "<leader><leader>", "@:")
 vim.keymap.set("n", "<C-m>", "`")
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", {})
-vim.keymap.set({ "n", "t" }, "<C-b>", "<cmd>b#<CR>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -19,6 +18,7 @@ vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("n", "r", "<C-r>")
+vim.keymap.set({ "n", "t" }, "<C-b>", "<cmd>b#<CR>")
 
 vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
@@ -39,9 +39,9 @@ vim.keymap.set("n", "<leader>xq", vim.diagnostic.setloclist, {})
 vim.keymap.set("n", "<leader>xj", "<cmd>lnext<CR>zz", { desc = "Location list juml next" })
 vim.keymap.set("n", "<leader>xk", "<cmd>lprev<CR>zz", { desc = "Location list jump prev" })
 -- quickfix list diagnostic
-vim.keymap.set("n", "<leader>cc", vim.diagnostic.setqflist)
-vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz", { desc = "quickfix list jump next" })
-vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz", { desc = "quickfix list jump prev" })
+vim.keymap.set("n", "<leader>cc", vim.diagnostic.setqflist, {})
+vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz", { desc = "Quickfix list jump next" })
+vim.keymap.set("n", "<C-k>", "<cmd>cprev<CR>zz", { desc = "Quickfix list jump prev" })
 
 -- harpoon like navigation
 vim.keymap.set("n", "<leader>a", function()
@@ -54,6 +54,10 @@ vim.keymap.set("n", "<C-h>", "<cmd>1argument<CR>", { desc = "Args select 1" })
 vim.keymap.set("n", "<C-t>", "<cmd>2argument<CR>", { desc = "Args select 2" })
 vim.keymap.set("n", "<C-n>", "<cmd>3argument<CR>", { desc = "Args select 3" })
 vim.keymap.set("n", "<C-s>", "<cmd>4argument<CR>", { desc = "Args select 4" })
+
+-- git diff
+vim.keymap.set("n", "gu", "<cmd>diffget //2<CR>", { desc = "Git get remote diff" })
+vim.keymap.set("n", "gh", "<cmd>diffget //3<CR>", { desc = "Git get local diff" })
 
 -- terminal commands
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod 755 %<CR>")
