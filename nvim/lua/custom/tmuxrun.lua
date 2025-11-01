@@ -1,30 +1,7 @@
--- build, run && test
-local lang_maps = {
-    c = {
-        build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
-        exec = "cmake --build build --target run", -- need to add custom target in cmake
-        test = "mkdir -p build && ctest --test-dir build --output-on-failure",
-    },
-    cpp = {
-        build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
-        exec = "cmake --build build --target run", -- need to add custom target in cmake
-        test = "mkdir -p build && ctest --test-dir build --output-on-failure",
-    },
-    rust = { build = "cargo build", exec = "cargo run", test = "cargo test" },
-    go = { build = "go build", exec = "go run .", test = "go test ./..." },
-    sh = { exec = "./%" },
-    python = { exec = "python %", test = "python -m pytest" },
-}
-
-local makefile_cmds = {
-    build = "make",
-    exec = "make run",
-    test = "make test",
-}
-
+-- tmux_runner.lua local = {}
 local command_pane = nil
 
-local function send_to_tmux(cmd)
+function SendToTmux(cmd)
     cmd = cmd:gsub("%%", vim.fn.expand("%"))
     if not command_pane or vim.fn.system("tmux list-panes -F '#{pane_id}' | wc -l") == "1\n" then
         vim.fn.system("tmux split-window -v -c '#{pane_current_path}'")
@@ -34,41 +11,25 @@ local function send_to_tmux(cmd)
     vim.fn.system(string.format("tmux send-keys -t %s 'clear && %s' C-m", command_pane, cmd))
 end
 
-local function has_makefile()
-    return vim.fn.filereadable("Makefile") == 1
-end
-
-for lang, cmds in pairs(lang_maps) do
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = lang,
-        callback = function()
-            local effective_cmds = cmds
-            if has_makefile() then
-                effective_cmds = makefile_cmds
-            end
-
-            if effective_cmds.build then
-                vim.keymap.set("n", "<leader>B", function()
-                    send_to_tmux(effective_cmds.build)
-                end, { buffer = true, desc = "Tmux runner build" })
-            end
-            if effective_cmds.exec then
-                vim.keymap.set("n", "<leader>R", function()
-                    send_to_tmux(effective_cmds.exec)
-                end, { buffer = true, desc = "Tmux runner execute" })
-            end
-            if effective_cmds.test then
-                vim.keymap.set("n", "<leader>T", function()
-                    send_to_tmux(effective_cmds.test)
-                end, { buffer = true, desc = "Tmux runner test" })
-            end
-        end,
-    })
-end
-
-vim.keymap.set("n", "<leader>X", function()
+function KillPane()
     if command_pane then
         vim.fn.system("tmux kill-pane -t " .. command_pane)
         command_pane = nil
     end
-end, { desc = "Tmux runner kill pane" })
+end
+
+-- nvim commands
+vim.api.nvim_create_user_command("TmuxRunner", function(opts)
+    SendToTmux(opts.args)
+end, { nargs = "+" })
+
+-- run visually selected line in tmux
+vim.api.nvim_create_user_command("TmuxSendRange", function(opts)
+    local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
+    local cmd = table.concat(lines, " ")
+    SendToTmux(cmd)
+end, { range = true })
+
+vim.api.nvim_create_user_command("TmuxKillPane", function()
+    KillPane()
+end, {})

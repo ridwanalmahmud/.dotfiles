@@ -62,3 +62,7 @@ vim.keymap.set("n", "gh", "<cmd>diffget //3<CR>", { desc = "Git get local diff" 
 -- terminal commands
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod 755 %<CR>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+
+-- tmux runner
+vim.keymap.set("n", "<leader>X", "<cmd>TmuxKillPane<CR>", { desc = "Tmux kill pane" })
+vim.keymap.set("v", "<leader>R", "<cmd>TmuxSendRange<CR>", { desc = "Tmux send visual selection" })

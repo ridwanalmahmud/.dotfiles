@@ -12,7 +12,7 @@ return {
         vim.keymap.set("o", "e", function()
             flash.remote()
         end, { desc = "Flash remote"})
-        vim.keymap.set({ "o", "x" }, "R", function()
+        vim.keymap.set({ "o", "x" }, "r", function()
             flash.treesitter_search()
         end, { desc = "Flash Treesitter search"})
         vim.keymap.set({ "c" }, "<c-s>", function()

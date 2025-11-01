@@ -1,5 +1,5 @@
 -- === File icons ===
-_G.get_statusline_file_icon = function()
+function StatusFileIcon()
     local filename = vim.fn.expand("%:t")
     if filename == "" then
         return ""
@@ -17,6 +17,44 @@ _G.get_statusline_file_icon = function()
     return ""
 end
 
+-- === Statusline git branch ===
+local git_branch_cache = {}
+
+function GetGitBranch()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    if bufname == "" then
+        return ""
+    end
+
+    local bufdir = vim.fn.fnamemodify(bufname, ":p:h")
+
+    if git_branch_cache[bufdir] then
+        return git_branch_cache[bufdir]
+    end
+
+    local handle =
+        io.popen("git -C " .. vim.fn.shellescape(bufdir) .. " branch --show-current 2>/dev/null")
+    if handle then
+        local result = handle:read("*a"):gsub("%s+", "")
+        handle:close()
+        git_branch_cache[bufdir] = result ~= "" and " " .. result .. " " or ""
+        return git_branch_cache[bufdir]
+    end
+
+    git_branch_cache[bufdir] = ""
+    return ""
+end
+
+local augroup = vim.api.nvim_create_augroup("GitBranchCache", { clear = true })
+
+vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter" }, {
+    desc = "Get git branch name",
+    group = augroup,
+    callback = function()
+        git_branch_cache = {}
+    end,
+})
+
 -- === Statusline diagnostics ===
 local icons = {
     ERROR = " ",
@@ -26,22 +64,22 @@ local icons = {
     HINT = " ",
 }
 
-_G.statusline_diagnostics_error = function()
+function StatusDiagErr()
     local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     return count > 0 and icons.ERROR .. count .. " " or ""
 end
 
-_G.statusline_diagnostics_warn = function()
+function StatusDiagWarn()
     local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
     return count > 0 and icons.WARN .. count .. " " or ""
 end
 
-_G.statusline_diagnostics_info = function()
+function StatusDiagInfo()
     local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
     return count > 0 and icons.INFO .. count .. " " or ""
 end
 
-_G.statusline_diagnostics_hint = function()
+function StatusDiagHint()
     local count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
     return count > 0 and icons.HINT .. count .. " " or ""
 end
@@ -49,18 +87,18 @@ end
 vim.o.statusline = table.concat({
     "%#StatusStyle#",
     " ",
-    "%{v:lua.get_statusline_git_branch()}", -- git branch
+    "%{v:lua.GetGitBranch()}", -- git branch
     "%#StatusStyle#",
-    " %#StatusFile#%{v:lua.get_statusline_file_icon()}", -- file icon
+    " %#StatusFile#%{v:lua.StatusFileIcon()}", -- file icon
     "%#StatusStyle#", -- reset
     "%<%t%h%w%m%r", -- filename and flags
     "%=", -- right align
 
     -- diagnostics
-    "%#StatusDiagERROR#%{v:lua.statusline_diagnostics_error()}",
-    "%#StatusDiagWARN#%{v:lua.statusline_diagnostics_warn()}",
-    "%#StatusDiagINFO#%{v:lua.statusline_diagnostics_info()}",
-    "%#StatusDiagHINT#%{v:lua.statusline_diagnostics_hint()}",
+    "%#StatusDiagERROR#%{v:lua.StatusDiagErr()}",
+    "%#StatusDiagWARN#%{v:lua.StatusDiagWarn()}",
+    "%#StatusDiagINFO#%{v:lua.StatusDiagInfo()}",
+    "%#StatusDiagHINT#%{v:lua.StatusDiagHint()}",
 
     "%#StatusStyle#", -- reset
     "[%n] ", -- status buffer

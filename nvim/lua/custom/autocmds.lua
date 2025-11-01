@@ -1,3 +1,4 @@
+-- === Highlight on yank ===
 vim.api.nvim_create_autocmd("TextYankPost", {
     desc = "Highlight when yanking (copying) text",
     group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -6,44 +7,58 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
--- === Statusline git branch ===
-local git_branch_cache = {}
+-- === build, run and test
+local lang_maps = {
+    c = {
+        build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
+        exec = "cmake --build build --target run", -- need to add custom target in cmake
+        test = "mkdir -p build && ctest --test-dir build --output-on-failure",
+    },
+    cpp = {
+        build = "mkdir -p build && cmake -DCMAKE_BUILD_TYPE=Debug -B build -G Ninja && cmake --build build --parallel $(nproc)",
+        exec = "cmake --build build --target run", -- need to add custom target in cmake
+        test = "mkdir -p build && ctest --test-dir build --output-on-failure",
+    },
+    rust = { build = "cargo build", exec = "cargo run", test = "cargo test" },
+    go = { build = "go build", exec = "go run .", test = "go test ./..." },
+    sh = { exec = "./%" },
+    python = { exec = "python %", test = "python -m pytest" },
+}
 
-local function get_git_branch()
-    local bufname = vim.api.nvim_buf_get_name(0)
-    if bufname == "" then
-        return ""
-    end
+local makefile_cmds = {
+    build = "make",
+    exec = "make run",
+    test = "make test",
+}
 
-    local bufdir = vim.fn.fnamemodify(bufname, ":p:h")
-
-    if git_branch_cache[bufdir] then
-        return git_branch_cache[bufdir]
-    end
-
-    local handle =
-        io.popen("git -C " .. vim.fn.shellescape(bufdir) .. " branch --show-current 2>/dev/null")
-    if handle then
-        local result = handle:read("*a"):gsub("%s+", "")
-        handle:close()
-        git_branch_cache[bufdir] = result ~= "" and " " .. result .. " " or ""
-        return git_branch_cache[bufdir]
-    end
-
-    git_branch_cache[bufdir] = ""
-    return ""
+local function has_makefile()
+    return vim.fn.filereadable("Makefile") == 1
 end
 
-local augroup = vim.api.nvim_create_augroup("GitBranchCache", { clear = true })
+for lang, cmds in pairs(lang_maps) do
+    vim.api.nvim_create_autocmd("FileType", {
+        pattern = lang,
+        callback = function()
+            local effective_cmds = cmds
+            if has_makefile() then
+                effective_cmds = makefile_cmds
+            end
 
-vim.api.nvim_create_autocmd({ "VimEnter", "BufEnter" }, {
-    desc = "Get git branch name",
-    group = augroup,
-    callback = function()
-        git_branch_cache = {}
-    end,
-})
-
-_G.get_statusline_git_branch = function()
-    return get_git_branch()
+            if effective_cmds.build then
+                vim.keymap.set("n", "<leader>B", function()
+                    SendToTmux(effective_cmds.build)
+                end, { buffer = true, desc = "Tmux build" })
+            end
+            if effective_cmds.exec then
+                vim.keymap.set("n", "<leader>r", function()
+                    SendToTmux(effective_cmds.exec)
+                end, { buffer = true, desc = "Tmux execute" })
+            end
+            if effective_cmds.test then
+                vim.keymap.set("n", "<leader>tt", function()
+                    SendToTmux(effective_cmds.test)
+                end, { buffer = true, desc = "Tmux run test" })
+            end
+        end,
+    })
 end
