@@ -12,9 +12,9 @@ vim.opt.updatetime = 50
 vim.opt.clipboard = "unnamedplus"
 vim.opt.showmode = false
 
-vim.opt.nu = true
-vim.opt.numberwidth = 3
+vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.numberwidth = 3
 
 vim.opt.signcolumn = "yes:2"
 vim.opt.colorcolumn = ""
@@ -64,3 +64,4 @@ vim.cmd("set path+=**")
 vim.cmd("filetype plugin on")
 vim.cmd("set wildmenu")
 vim.cmd("set shell=/usr/sbin/zsh")
+vim.cmd("set shellcmdflag=-ic")

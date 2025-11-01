@@ -12,7 +12,7 @@ return {
 
     opts = {
         keymap = { preset = "enter" },
-        cmdline = { enabled = false },
+        term = { enabled = false },
         snippets = { preset = "luasnip" },
         appearance = {
             use_nvim_cmp_as_default = true,
@@ -40,7 +40,15 @@ return {
             },
         },
         sources = {
-            default = { "lsp", "path", "snippets", "buffer" },
+            default = { "lsp", "path", "snippets", "buffer", "omni" },
+            providers = {
+                cmdline = {
+                    enabled = function()
+                        return vim.fn.getcmdtype() ~= ":"
+                            or not vim.fn.getcmdline():match("^[%%0-9,'<>%-]*!")
+                    end,
+                },
+            },
         },
         fuzzy = { implementation = "prefer_rust_with_warning" },
         signature = { enabled = true },
